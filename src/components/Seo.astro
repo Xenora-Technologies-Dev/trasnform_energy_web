@@ -4,19 +4,38 @@ import { absoluteUrl, defaultSeo, pageTitle, type SeoInput } from '@/data/seo';
 
 type Props = SeoInput;
 
-const { title, description, path, type = 'website', image, noindex = false, ogTitle, ogDescription } =
-  Astro.props;
+const {
+  title,
+  description,
+  path,
+  type = 'website',
+  image,
+  imageAlt,
+  imageWidth,
+  imageHeight,
+  noindex = false,
+  ogTitle,
+  ogDescription,
+  publishedTime,
+  modifiedTime,
+} = Astro.props;
 const canonical = absoluteUrl(path, Astro.site);
 const resolvedTitle = pageTitle(title);
 const resolvedDescription = description ?? defaultSeo.description;
 const resolvedOgTitle = ogTitle ?? resolvedTitle;
 const resolvedOgDescription = ogDescription ?? resolvedDescription;
 const ogImage = absoluteUrl(image ?? defaultSeo.image.src, Astro.site);
+const ogAlt = imageAlt ?? defaultSeo.image.alt;
+const toIso = (value?: Date | string) =>
+  value ? (value instanceof Date ? value.toISOString() : new Date(value).toISOString()) : undefined;
+const published = toIso(publishedTime);
+const modified = toIso(modifiedTime);
 ---
 
 <title>{resolvedTitle}</title>
 <meta name="description" content={resolvedDescription} />
 <link rel="canonical" href={canonical} />
+<link rel="alternate" type="application/rss+xml" title={`${company.publicName} Insights`} href="/rss.xml" />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 <meta property="og:type" content={type} />
 <meta property="og:site_name" content={company.publicName} />
@@ -24,10 +43,14 @@ const ogImage = absoluteUrl(image ?? defaultSeo.image.src, Astro.site);
 <meta property="og:description" content={resolvedOgDescription} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImage} />
-<meta property="og:image:alt" content={defaultSeo.image.alt} />
+<meta property="og:image:alt" content={ogAlt} />
+{imageWidth && <meta property="og:image:width" content={String(imageWidth)} />}
+{imageHeight && <meta property="og:image:height" content={String(imageHeight)} />}
 <meta property="og:locale" content="en" />
+{published && <meta property="article:published_time" content={published} />}
+{modified && <meta property="article:modified_time" content={modified} />}
 <meta name="twitter:card" content={defaultSeo.twitterCard} />
 <meta name="twitter:title" content={resolvedOgTitle} />
 <meta name="twitter:description" content={resolvedOgDescription} />
 <meta name="twitter:image" content={ogImage} />
-<meta name="twitter:image:alt" content={defaultSeo.image.alt} />
+<meta name="twitter:image:alt" content={ogAlt} />

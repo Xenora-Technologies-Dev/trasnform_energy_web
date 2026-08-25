@@ -22,9 +22,14 @@ export type SeoInput = {
   path: string;
   type?: 'website' | 'article';
   image?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   noindex?: boolean;
   ogTitle?: string;
   ogDescription?: string;
+  publishedTime?: Date | string;
+  modifiedTime?: Date | string;
 };
 
 export function absoluteUrl(path: string, site?: URL | string) {

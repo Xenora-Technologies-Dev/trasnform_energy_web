@@ -1,0 +1,48 @@
+---
+import InsightArticle from '@/components/insights/InsightArticle.astro';
+import TopicPage from '@/components/insights/TopicPage.astro';
+import {
+  getIndexableTopics,
+  getPublishedInsights,
+  getRenderableInsights,
+  relatedInsights,
+  type InsightEntry,
+} from '@/lib/insights';
+
+export async function getStaticPaths() {
+  const published = await getPublishedInsights();
+  const renderable = await getRenderableInsights();
+  const topics = getIndexableTopics(published);
+
+  const articlePaths = renderable.map((entry) => ({
+    params: { slug: entry.id },
+    props: {
+      kind: 'article' as const,
+      entry,
+      related: relatedInsights(entry, published),
+      topic: undefined,
+    },
+  }));
+
+  const topicPaths = topics.map((topic) => ({
+    params: { slug: topic.id },
+    props: {
+      kind: 'topic' as const,
+      topic,
+      entry: undefined,
+      related: [] as InsightEntry[],
+    },
+  }));
+
+  return [...articlePaths, ...topicPaths];
+}
+
+type Props =
+  | { kind: 'article'; entry: InsightEntry; related: InsightEntry[]; topic?: undefined }
+  | { kind: 'topic'; topic: NonNullable<ReturnType<typeof getIndexableTopics>[number]>; entry?: undefined; related: InsightEntry[] };
+
+const { kind, entry, related, topic } = Astro.props;
+---
+
+{kind === 'article' && entry && <InsightArticle entry={entry} related={related} />}
+{kind === 'topic' && topic && <TopicPage topic={topic} />}

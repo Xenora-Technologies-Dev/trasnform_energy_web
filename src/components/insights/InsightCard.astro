@@ -1,0 +1,65 @@
+---
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import type { InsightEntry } from '@/lib/insights';
+import { formatInsightDate, insightPath, primaryCategory } from '@/lib/insights';
+
+type Props = {
+  entry: InsightEntry;
+  featured?: boolean;
+};
+
+const { entry, featured = false } = Astro.props;
+const category = primaryCategory(entry);
+const searchText = [
+  entry.data.title,
+  entry.data.description,
+  ...entry.data.categories,
+  ...entry.data.tags,
+  entry.data.sourceName,
+].join(' ');
+---
+
+<article
+  class:list={[
+    'group border border-line bg-white transition-colors duration-200 hover:border-navy/30',
+    featured ? 'p-7 sm:p-10' : 'flex h-full flex-col p-6 sm:p-7',
+  ]}
+  data-insight-item
+  data-categories={entry.data.categories.join(' ')}
+  data-region={entry.data.region}
+  data-search={searchText}
+>
+  <p class="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-energy">
+    {category?.label}
+  </p>
+  <p class="mt-2 text-xs text-mute">
+    <time datetime={entry.data.pubDate.toISOString()}>Published {formatInsightDate(entry.data.pubDate)}</time>
+    {
+      entry.data.updatedDate && (
+        <span>
+          {' '}
+          · Updated {formatInsightDate(entry.data.updatedDate)}
+        </span>
+      )
+    }
+    {entry.data.archived && <span> · Historical Development</span>}
+  </p>
+  <h3 class:list={['mt-4 font-semibold tracking-tight text-navy', featured ? 'text-2xl sm:text-3xl' : 'text-xl']}>
+    <a href={insightPath(entry)} class="hover:underline">
+      {entry.data.title}
+    </a>
+  </h3>
+  <p class:list={['mt-3 leading-relaxed text-mute', featured ? 'max-w-3xl text-base sm:text-lg' : 'flex-1 text-sm']}>
+    {entry.data.description}
+  </p>
+  <a
+    href={insightPath(entry)}
+    class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-navy"
+  >
+    Read more
+    <ArrowUpRight
+      class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+      aria-hidden="true"
+    />
+  </a>
+</article>

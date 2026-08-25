@@ -1,0 +1,45 @@
+---
+import EnergyLines from '@/components/EnergyLines.astro';
+import { company } from '@/data/company';
+
+type Props = {
+  category: string;
+  title: string;
+  kicker?: string;
+  compact?: boolean;
+};
+
+const { category, title, kicker = company.publicName, compact = false } = Astro.props;
+---
+
+<figure
+  class:list={[
+    'relative overflow-hidden bg-navy text-white',
+    compact ? 'min-h-[14rem] sm:min-h-[16rem]' : 'min-h-[18rem] sm:min-h-[22rem] lg:min-h-[24rem]',
+  ]}
+>
+  <div class="technical-grid pointer-events-none absolute inset-0 opacity-25 mix-blend-soft-light" aria-hidden="true"></div>
+  <EnergyLines tone="dark" />
+  <div
+    class:list={[
+      'relative flex h-full flex-col justify-between',
+      compact ? 'p-6 sm:p-8' : 'p-8 sm:p-10 lg:p-12',
+    ]}
+  >
+    <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-spark">{category}</p>
+    <div class="mt-8 max-w-3xl">
+      <p
+        class:list={[
+          'font-semibold tracking-tight',
+          compact ? 'text-2xl leading-snug sm:text-3xl' : 'text-3xl leading-tight sm:text-4xl lg:text-[2.6rem]',
+        ]}
+      >
+        {title}
+      </p>
+      <p class="mt-6 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-white/55">{kicker}</p>
+    </div>
+  </div>
+  <div class="pointer-events-none absolute inset-x-0 bottom-0 h-px overflow-hidden" aria-hidden="true">
+    <div class="energy-line-motion h-px w-[120%] bg-gradient-to-r from-transparent via-energy/70 to-spark/80"></div>
+  </div>
+</figure>

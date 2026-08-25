@@ -1,0 +1,229 @@
+---
+import { render } from 'astro:content';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import EditorialFallback from '@/components/insights/EditorialFallback.astro';
+import CtaSection from '@/components/CtaSection.astro';
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import InsightJsonLd from '@/components/insights/InsightJsonLd.astro';
+import { company } from '@/data/company';
+import { getCategory } from '@/data/energy-news-config';
+import {
+  formatInsightDate,
+  getIndexableTopics,
+  getPublishedInsights,
+  insightPath,
+  isThinInsight,
+  primaryCategory,
+  relatedServicesForInsight,
+  type InsightEntry,
+} from '@/lib/insights';
+
+type Props = {
+  entry: InsightEntry;
+  related: InsightEntry[];
+};
+
+const { entry, related } = Astro.props;
+const { Content } = await render(entry);
+const category = primaryCategory(entry);
+const path = insightPath(entry);
+const ogImage = `/og/insights/${entry.id}.svg`;
+const services = relatedServicesForInsight(entry);
+const topicPages = new Set(getIndexableTopics(await getPublishedInsights()).map((topic) => topic.id));
+const topics = entry.data.categories
+  .map((id) => getCategory(id))
+  .filter((item) => item?.topic && topicPages.has(item.id));
+const noindex = !entry.data.indexable || isThinInsight(entry);
+const contentLabel =
+  entry.data.contentType === 'regulatory-update'
+    ? 'Regulatory update'
+    : entry.data.contentType === 'market-update'
+      ? 'Market insight'
+      : entry.data.contentType === 'insight'
+        ? 'Technical insight'
+        : 'News update';
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  path={path}
+  type="article"
+  ogTitle={entry.data.title}
+  ogDescription={entry.data.description}
+  image={ogImage}
+  imageAlt={`${company.publicName} — ${entry.data.title}`}
+  imageWidth={1200}
+  imageHeight={630}
+  noindex={noindex}
+  publishedTime={entry.data.pubDate}
+  modifiedTime={entry.data.updatedDate ?? entry.data.pubDate}
+>
+  <InsightJsonLd slot="head" entry={entry} related={related} />
+
+  <article class="bg-white">
+    <header class="border-b border-line bg-canvas">
+      <div class="mx-auto max-w-3xl px-6 py-10 sm:px-8 sm:py-12">
+        <Breadcrumb
+          items={[
+            { href: '/', label: 'Home' },
+            { href: '/insights', label: 'Insights' },
+            { label: category?.label ?? 'Energy Intelligence' },
+          ]}
+        />
+        <p class="mt-8 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-energy">
+          {category?.label}
+          <span class="text-mute"> · {contentLabel}</span>
+        </p>
+        <h1 class="mt-4 text-4xl font-semibold tracking-tight text-navy sm:text-5xl sm:leading-[1.12]">
+          {entry.data.title}
+        </h1>
+        <p class="mt-6 text-sm text-mute">
+          <time datetime={entry.data.pubDate.toISOString()}>
+            Published {formatInsightDate(entry.data.pubDate)}
+          </time>
+          {
+            entry.data.updatedDate && (
+              <span>
+                {' '}
+                · Updated {formatInsightDate(entry.data.updatedDate)}
+              </span>
+            )
+          }
+          {entry.data.archived && <span> · Historical Development</span>}
+          <span aria-hidden="true"> · </span>
+          <span>Source: {entry.data.sourceName}</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="mx-auto max-w-3xl px-6 sm:px-8">
+      <div class="mt-8 overflow-hidden border border-line">
+        <EditorialFallback category={category?.label ?? 'Insights'} title={entry.data.title} />
+      </div>
+
+      <div class="insight-reading py-12 sm:py-14">
+        <p class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-energy">What happened</p>
+        <p class="mt-4 text-lg leading-relaxed text-ink">{entry.data.summary}</p>
+
+        <aside class="mt-10 border-l-2 border-energy bg-canvas px-6 py-6 sm:px-8">
+          <p class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-energy">Why it matters</p>
+          <p class="mt-3 text-base leading-relaxed text-ink sm:text-lg">{entry.data.whyItMatters}</p>
+        </aside>
+
+        {
+          entry.data.perspective && (
+            <section class="mt-10">
+              <h2 class="text-2xl font-semibold text-navy">Professional context</h2>
+              <p class="mt-4 text-base leading-relaxed text-mute sm:text-lg">{entry.data.perspective}</p>
+            </section>
+          )
+        }
+
+        <div class="article-prose mt-10">
+          <Content />
+        </div>
+
+        <p class="mt-10 border-t border-line pt-6 text-sm text-mute">
+          Source: {entry.data.sourceName}. Transform Energy provides original commentary and does not reproduce the source article.
+        </p>
+        <a
+          href={entry.data.originalUrl}
+          class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Read original source
+          <ArrowUpRight class="h-4 w-4" aria-hidden="true" />
+        </a>
+
+        {
+          topics.length > 0 && (
+            <section class="mt-12">
+              <h2 class="text-lg font-semibold text-navy">Related topics</h2>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                {topics.map((topic) => (
+                  <li>
+                    <a
+                      href={`/insights/${topic!.id}`}
+                      class="border border-line px-3 py-1.5 text-xs font-semibold tracking-wide text-navy hover:border-navy/40"
+                    >
+                      {topic!.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </div>
+    </div>
+  </article>
+
+  {
+    services.length > 0 && (
+      <section class="border-t border-line bg-canvas">
+        <div class="mx-auto shell px-6 py-16 sm:px-8">
+          <AnimatedReveal>
+            <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-energy">
+              Relevant Transform Energy services
+            </p>
+            <h2 class="mt-3 max-w-2xl text-3xl font-semibold tracking-tight text-navy">
+              Related consultancy in the same practice.
+            </h2>
+          </AnimatedReveal>
+          <ul class="mt-10 grid gap-px border border-line bg-line md:grid-cols-3">
+            {services.map((service) => (
+              <li class="bg-white">
+                <a href={service.href} class="group flex h-full flex-col p-6 sm:p-7">
+                  <h3 class="text-lg font-semibold text-navy">{service.shortTitle}</h3>
+                  <p class="mt-2 flex-1 text-sm leading-relaxed text-mute">{service.summary}</p>
+                  <span class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-navy">
+                    View service
+                    <ArrowUpRight
+                      class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    related.length > 0 && (
+      <section class="border-t border-line bg-white">
+        <div class="mx-auto shell px-6 py-16 sm:px-8">
+          <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-energy">Related Insights</p>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-navy">Further reading</h2>
+          <ul class="mt-10 grid gap-4 md:grid-cols-3">
+            {related.map((item) => (
+              <li>
+                <a href={insightPath(item)} class="group flex h-full flex-col border border-line p-6 hover:border-navy/30">
+                  <p class="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-energy">
+                    {primaryCategory(item)?.label}
+                  </p>
+                  <h3 class="mt-3 text-lg font-semibold text-navy group-hover:underline">{item.data.title}</h3>
+                  <p class="mt-3 flex-1 text-sm leading-relaxed text-mute">{item.data.description}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaSection
+    title="Need expert guidance on an energy-sector requirement?"
+    body="Discuss engineering, regulatory, renewable-energy, project, or power-market questions with Transform Energy."
+    ctaLabel="Talk to Transform Energy"
+    ctaHref="/contact"
+  />
+</BaseLayout>

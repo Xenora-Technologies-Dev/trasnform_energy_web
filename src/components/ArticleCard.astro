@@ -1,32 +1,30 @@
 ---
 import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
-import type { CollectionEntry } from 'astro:content';
+import type { InsightEntry } from '@/lib/insights';
+import { formatInsightDate, insightPath, primaryCategory } from '@/lib/insights';
 
 type Props = {
-  entry: CollectionEntry<'insights'>;
+  entry: InsightEntry;
 };
 
 const { entry } = Astro.props;
-const published = entry.data.pubDate.toLocaleDateString('en-GB', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+const category = primaryCategory(entry);
+const published = formatInsightDate(entry.data.pubDate);
 ---
 
 <article class="border-b border-line py-8 first:border-t">
   <p class="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-mute">
     <time datetime={entry.data.pubDate.toISOString()}>{published}</time>
-    {entry.data.topic && <span> · {entry.data.topic}</span>}
+    {category && <span> · {category.label}</span>}
   </p>
   <h2 class="mt-3 text-2xl font-semibold tracking-tight text-navy">
-    <a href={`/insights/${entry.id}`} class="hover:underline">
+    <a href={insightPath(entry)} class="hover:underline">
       {entry.data.title}
     </a>
   </h2>
   <p class="mt-3 max-w-2xl text-sm leading-relaxed text-mute sm:text-base">{entry.data.description}</p>
   <a
-    href={`/insights/${entry.id}`}
+    href={insightPath(entry)}
     class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-navy"
   >
     Read article

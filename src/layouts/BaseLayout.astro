@@ -24,6 +24,7 @@ const { jsonLd = true, ...seo } = Astro.props;
     <link rel="apple-touch-icon" href="/brand/tecs-logo.jpg" />
     <Seo {...seo} />
     {jsonLd && <JsonLd />}
+    <slot name="head" />
     <script is:inline>
       document.documentElement.classList.remove('no-js');
       document.documentElement.classList.add('js');

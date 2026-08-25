@@ -1,0 +1,111 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import InsightCard from '@/components/insights/InsightCard.astro';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import { relatedServiceMap } from '@/data/energy-news-config';
+import { getService } from '@/data/services';
+import { absoluteUrl } from '@/data/seo';
+import { company } from '@/data/company';
+import type { InsightEntry } from '@/lib/insights';
+
+type Topic = {
+  id: string;
+  label: string;
+  seoTitle: string;
+  seoDescription: string;
+  intro: string;
+  articles: InsightEntry[];
+};
+
+type Props = {
+  topic: Topic;
+};
+
+const { topic } = Astro.props;
+const path = `/insights/${topic.id}`;
+const services = (relatedServiceMap[topic.id] ?? [])
+  .map((slug) => getService(slug))
+  .filter(Boolean)
+  .slice(0, 3);
+const origin = Astro.site;
+const crumbs = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: origin ? new URL('/', origin).toString() : '/' },
+    { '@type': 'ListItem', position: 2, name: 'Insights', item: origin ? absoluteUrl('/insights', origin) : '/insights' },
+    { '@type': 'ListItem', position: 3, name: topic.label, item: origin ? absoluteUrl(path, origin) : path },
+  ],
+};
+const collection = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: topic.seoTitle,
+  description: topic.seoDescription,
+  url: origin ? absoluteUrl(path, origin) : path,
+  isPartOf: origin ? new URL('/', origin).toString() : '/',
+  publisher: { '@type': 'Organization', name: company.publicName },
+};
+---
+
+<PageLayout
+  title={topic.seoTitle}
+  description={topic.seoDescription}
+  path={path}
+  ogTitle={topic.seoTitle}
+  ogDescription={topic.seoDescription}
+  image="/og/insights-default.svg"
+  imageAlt={`${company.publicName} Energy Intelligence`}
+  imageWidth={1200}
+  imageHeight={630}
+  eyebrow="Energy Intelligence"
+  heading={topic.label}
+  lede={topic.intro}
+  crumbs={[
+    { href: '/', label: 'Home' },
+    { href: '/insights', label: 'Insights' },
+    { label: topic.label },
+  ]}
+  ctaTitle="Need expert guidance on an energy-sector requirement?"
+  ctaBody="Write with a short note on the engineering, regulatory, or project-support assignment."
+  ctaLabel="Talk to Transform Energy"
+>
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(collection)} />
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(crumbs)} />
+
+  <section class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+    <AnimatedReveal>
+      <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-energy">Latest relevant articles</p>
+      <h2 class="mt-3 text-2xl font-semibold text-navy sm:text-3xl">Recent briefings in this topic.</h2>
+    </AnimatedReveal>
+    <div class="mt-10 grid gap-4 md:grid-cols-2">
+      {topic.articles.map((entry) => <InsightCard entry={entry} />)}
+    </div>
+  </section>
+
+  {
+    services.length > 0 && (
+      <section class="border-t border-line bg-canvas">
+        <div class="mx-auto shell px-6 py-16 sm:px-8">
+          <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-energy">Related services</p>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight text-navy">Consultancy connected to this topic.</h2>
+          <ul class="mt-10 grid gap-px border border-line bg-line md:grid-cols-3">
+            {services.map((service) => (
+              <li class="bg-white">
+                <a href={service!.href} class="group flex h-full flex-col p-6 sm:p-7">
+                  <h3 class="text-lg font-semibold text-navy">{service!.shortTitle}</h3>
+                  <p class="mt-2 flex-1 text-sm leading-relaxed text-mute">{service!.summary}</p>
+                  <span class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-navy">
+                    View service
+                    <ArrowUpRight class="h-4 w-4" aria-hidden="true" />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+</PageLayout>

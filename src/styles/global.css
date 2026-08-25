@@ -151,6 +151,10 @@
     @apply list-disc space-y-2 pl-5 text-mute;
   }
 
+  .insight-reading {
+    max-width: 42rem;
+  }
+
   @media (min-width: 768px) {
     .site-header.is-compact .brand-logo {
       height: 3.75rem;

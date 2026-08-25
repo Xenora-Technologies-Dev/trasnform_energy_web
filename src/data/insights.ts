@@ -1,10 +1,13 @@
+import { ENERGY_NEWS_CONFIG } from './energy-news-config';
+
 export const insightsIntro = {
-  eyebrow: 'Insights',
-  heading: 'Technical notes, when they are ready.',
-  lede: 'This space is for future articles on regulation, power markets, renewable energy, and project documentation. No articles have been published yet.',
+  eyebrow: ENERGY_NEWS_CONFIG.listingEyebrow,
+  heading: ENERGY_NEWS_CONFIG.listingTitle,
+  lede: ENERGY_NEWS_CONFIG.listingLede,
+  support: ENERGY_NEWS_CONFIG.listingSupport,
   emptyTitle: 'Nothing published yet',
   emptyBody:
-    'Articles will appear here as they are written. The topics below indicate the kind of material this section is intended to hold — they are not published pieces.',
+    'Approved energy-intelligence notes will appear here. The section is reserved for original commentary on power, energy and regulation — not republished news.',
 } as const;
 
 export const insightTopics = [

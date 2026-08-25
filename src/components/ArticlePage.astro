@@ -1,48 +1,13 @@
 ---
-import { render, type CollectionEntry } from 'astro:content';
-import PageLayout from '@/layouts/PageLayout.astro';
+import InsightArticle from '@/components/insights/InsightArticle.astro';
+import { getPublishedInsights, relatedInsights, type InsightEntry } from '@/lib/insights';
 
 type Props = {
-  entry: CollectionEntry<'insights'>;
+  entry: InsightEntry;
 };
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
-const published = entry.data.pubDate.toLocaleDateString('en-GB', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+const related = relatedInsights(entry, await getPublishedInsights());
 ---
 
-<PageLayout
-  title={entry.data.title}
-  description={entry.data.description}
-  path={`/insights/${entry.id}`}
-  type="article"
-  ogTitle={entry.data.title}
-  ogDescription={entry.data.description}
-  eyebrow="Insight"
-  heading={entry.data.title}
-  lede={entry.data.description}
-  crumbs={[
-    { href: '/', label: 'Home' },
-    { href: '/insights', label: 'Insights' },
-    { label: entry.data.title },
-  ]}
->
-  <article class="mx-auto max-w-3xl px-6 py-16 sm:px-8">
-    <p class="text-sm text-mute">
-      <time datetime={entry.data.pubDate.toISOString()}>{published}</time>
-      {entry.data.topic && <span> · {entry.data.topic}</span>}
-    </p>
-    <div class="article-prose mt-8">
-      <Content />
-    </div>
-    <p class="mt-12 border-t border-line pt-6 text-sm text-mute">
-      <a href="/insights" class="font-medium text-navy hover:underline">Back to insights</a>
-      <span aria-hidden="true"> · </span>
-      <a href="/contact" class="font-medium text-navy hover:underline">Contact</a>
-    </p>
-  </article>
-</PageLayout>
+<InsightArticle entry={entry} related={related} />

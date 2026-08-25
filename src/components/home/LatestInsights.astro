@@ -1,0 +1,61 @@
+---
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import { ENERGY_NEWS_CONFIG } from '@/data/energy-news-config';
+import { getPublishedInsights, latestInsights, primaryCategory, insightPath, formatInsightDate } from '@/lib/insights';
+
+const entries = latestInsights(await getPublishedInsights(), ENERGY_NEWS_CONFIG.homepageLatestCount);
+---
+
+{
+  entries.length > 0 && (
+    <section id="insights" class="scroll-mt-28 border-t border-line bg-white">
+      <div class="mx-auto shell px-6 py-16 sm:px-8 lg:py-24">
+        <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <AnimatedReveal>
+            <SectionHeading
+              eyebrow="Energy Intelligence"
+              title="Latest Energy Intelligence"
+              kicker="Selected developments across power, energy and regulation — original commentary, not republished news."
+            />
+          </AnimatedReveal>
+          <a href="/insights" class="shrink-0 text-sm font-semibold text-navy hover:underline">
+            View All Insights
+          </a>
+        </div>
+
+        <ul class="mt-12 grid gap-4 lg:grid-cols-3">
+          {entries.map((entry) => (
+            <li>
+              <AnimatedReveal class="h-full">
+                <a
+                  href={insightPath(entry)}
+                  class="group flex h-full flex-col border border-line bg-white p-6 transition-colors duration-200 hover:border-navy/30 sm:p-7"
+                >
+                  <p class="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-energy">
+                    {primaryCategory(entry)?.label}
+                  </p>
+                  <p class="mt-2 text-xs text-mute">
+                    <time datetime={entry.data.pubDate.toISOString()}>
+                      {formatInsightDate(entry.data.pubDate)}
+                    </time>
+                  </p>
+                  <h3 class="mt-4 text-lg font-semibold text-navy sm:text-xl">{entry.data.title}</h3>
+                  <p class="mt-3 flex-1 text-sm leading-relaxed text-mute">{entry.data.description}</p>
+                  <span class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-navy">
+                    Read more
+                    <ArrowUpRight
+                      class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </a>
+              </AnimatedReveal>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

@@ -11,7 +11,16 @@ export default defineConfig({
   trailingSlash: 'never',
   output: 'static',
   adapter: netlify({ imageCDN: false }),
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => {
+        const path = new URL(page).pathname;
+        if (path.startsWith('/og/')) return false;
+        if (path.startsWith('/api/')) return false;
+        return true;
+      },
+    }),
+  ],
   vite: {
     plugins: [tailwindcss() as never],
     cacheDir: process.env.VITE_CACHE_DIR ?? '.cache-vite',
