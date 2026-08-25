@@ -1,0 +1,42 @@
+﻿---
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import Photo from '@/components/Photo.astro';
+import { photos } from '@/data/photos';
+---
+
+<section id="about" class="scroll-mt-28 bg-canvas">
+  <div class="mx-auto grid shell items-center gap-12 px-6 py-16 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:py-24 xl:gap-20 xl:px-12">
+    <AnimatedReveal>
+      <SectionHeading
+        eyebrow="About Transform Energy"
+        title="Experience that understands the power sector."
+      />
+      <div class="mt-6 max-w-xl space-y-4 text-base leading-relaxed text-mute sm:text-lg xl:max-w-2xl">
+        <p>
+          Transform Energy Consultancy was formed by seasoned engineering professionals. We provide
+          technically robust, compliant, and practical consultancy support for power and energy work.
+        </p>
+        <p>
+          The practice covers electrical engineering, regulatory affairs, project supervision,
+          renewable energy, power-market advisory, technical documentation, and safety audit — as a
+          consultancy, not as a construction, contracting, or installation company.
+        </p>
+      </div>
+      <p class="mt-8">
+        <a href="/about" class="text-sm font-semibold text-navy hover:underline">
+          Read more about the practice
+        </a>
+      </p>
+    </AnimatedReveal>
+    <AnimatedReveal>
+      <Photo
+        src={photos.engineering}
+        alt="Engineering review in a technical workspace"
+        class="overflow-hidden border border-line bg-white"
+        imgClass="h-[20rem] w-full object-cover sm:h-[24rem] lg:h-[28rem] xl:h-[32rem]"
+        sizes="(min-width: 1536px) 720px, (min-width: 1024px) 560px, 100vw"
+      />
+    </AnimatedReveal>
+  </div>
+</section>

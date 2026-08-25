@@ -1,0 +1,240 @@
+@import '@fontsource-variable/manrope';
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Manrope Variable', Manrope, ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy: #0b2a52;
+  --color-navy-dark: #071b35;
+  --color-energy: #3f9b2f;
+  --color-spark: #f5b51b;
+  --color-canvas: #f6f8f7;
+  --color-ink: #14202b;
+  --color-mute: #64717d;
+  --color-line: #e5e9e7;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+    font-feature-settings: 'ss01' on, 'cv11' on;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-spark);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-navy) 16%, white);
+    color: var(--color-navy-dark);
+  }
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 1100px) {
+    .shell {
+      max-width: min(90rem, calc(100% - 4rem));
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .shell {
+      max-width: min(104rem, calc(100% - 5rem));
+    }
+  }
+
+  @media (min-width: 1680px) {
+    .shell {
+      max-width: min(116rem, calc(100% - 6rem));
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .shell {
+      max-width: min(128rem, calc(100% - 7rem));
+    }
+  }
+
+  .technical-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--color-navy) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-navy) 6%, transparent) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  .energy-lines {
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, var(--color-navy) 10%, transparent) 45%,
+      color-mix(in srgb, var(--color-energy) 18%, transparent) 50%,
+      color-mix(in srgb, var(--color-navy) 10%, transparent) 55%,
+      transparent 100%
+    );
+    background-size: 220% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+  }
+
+  .site-header {
+    transition:
+      padding 200ms ease,
+      box-shadow 200ms ease;
+  }
+
+  .site-header.is-compact {
+    @apply py-2 shadow-[0_1px_0_0_var(--color-line)];
+  }
+
+  .site-header.is-compact .brand-logo {
+    height: 3.25rem;
+  }
+
+  [data-services-trigger][aria-expanded='true'] .services-chevron,
+  [data-mobile-services][aria-expanded='true'] .mobile-services-chevron {
+    transform: rotate(180deg);
+  }
+
+  .services-chevron,
+  .mobile-services-chevron {
+    transition: transform 180ms ease;
+  }
+
+  .article-prose {
+    @apply space-y-4 text-base leading-relaxed text-ink;
+  }
+
+  .article-prose h2 {
+    @apply mt-10 text-2xl font-semibold text-navy;
+  }
+
+  .article-prose h3 {
+    @apply mt-8 text-xl font-semibold text-navy;
+  }
+
+  .article-prose a {
+    @apply font-medium text-navy underline underline-offset-2;
+  }
+
+  .article-prose ul {
+    @apply list-disc space-y-2 pl-5 text-mute;
+  }
+
+  @media (min-width: 768px) {
+    .site-header.is-compact .brand-logo {
+      height: 3.75rem;
+    }
+  }
+
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 700ms ease,
+      transform 700ms ease;
+  }
+
+  html.no-js [data-reveal],
+  html.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.js [data-reveal] {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes energy-line-shift {
+  from {
+    transform: translateX(-6%);
+  }
+  to {
+    transform: translateX(6%);
+  }
+}
+
+.energy-line-motion {
+  animation: energy-line-shift 14s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .energy-line-motion {
+    animation: none;
+  }
+}
+
+.expertise-spine {
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-energy) 0%,
+    var(--color-navy) 50%,
+    var(--color-spark) 100%
+  );
+}
+
+@media (min-width: 1024px) {
+  .expertise-spine {
+    background-image: linear-gradient(
+      to right,
+      var(--color-energy) 0%,
+      var(--color-navy) 50%,
+      var(--color-spark) 100%
+    );
+  }
+}
+
+.market-pulse {
+  offset-path: path('M40 150 C 180 80, 320 220, 480 140 S 780 60, 920 130 S 1080 190, 1160 110');
+  offset-rotate: 0deg;
+  animation: market-pulse-move 8s linear infinite;
+}
+
+@keyframes market-pulse-move {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .market-pulse {
+    animation: none;
+    offset-distance: 55%;
+  }
+}

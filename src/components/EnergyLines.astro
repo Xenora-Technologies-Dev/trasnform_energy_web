@@ -1,0 +1,23 @@
+---
+type Props = {
+  class?: string;
+  tone?: 'light' | 'dark';
+};
+
+const { class: className = '', tone = 'light' } = Astro.props;
+---
+
+<div class:list={['pointer-events-none absolute inset-0 overflow-hidden', className]} aria-hidden="true">
+  <svg
+    class:list={[
+      'energy-line-motion h-full w-[120%]',
+      tone === 'dark' ? 'text-white/25' : 'text-navy/10',
+    ]}
+    viewBox="0 0 1200 200"
+    fill="none"
+    preserveAspectRatio="none"
+  >
+    <path d="M0 110 C 180 40, 320 170, 520 90 S 860 40, 1200 120" stroke="currentColor" stroke-width="1" />
+    <path d="M0 140 C 220 80, 400 160, 640 120 S 980 90, 1200 150" stroke="currentColor" stroke-width="0.75" opacity="0.7" />
+  </svg>
+</div>

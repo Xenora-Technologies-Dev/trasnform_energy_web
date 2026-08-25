@@ -1,0 +1,43 @@
+---
+import '@/styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import Seo from '@/components/Seo.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import type { SeoInput } from '@/data/seo';
+
+type Props = SeoInput & {
+  jsonLd?: boolean;
+};
+
+const { jsonLd = true, ...seo } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B2A52" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="/brand/tecs-logo.jpg" type="image/jpeg" />
+    <link rel="apple-touch-icon" href="/brand/tecs-logo.jpg" />
+    <Seo {...seo} />
+    {jsonLd && <JsonLd />}
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body class="flex min-h-screen flex-col bg-white text-ink">
+    <Header />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import { initReveal } from '@/scripts/reveal';
+      initReveal();
+    </script>
+  </body>
+</html>

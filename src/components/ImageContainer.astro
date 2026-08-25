@@ -1,0 +1,20 @@
+---
+type Props = {
+  caption?: string;
+  framed?: boolean;
+  class?: string;
+};
+
+const { caption, framed = true, class: className = '' } = Astro.props;
+---
+
+<figure class:list={[framed && 'border border-line bg-white', className]}>
+  <div class="overflow-hidden bg-canvas">
+    <slot />
+  </div>
+  {
+    caption && (
+      <figcaption class="mt-3 px-1 text-sm text-mute">{caption}</figcaption>
+    )
+  }
+</figure>

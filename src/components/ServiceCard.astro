@@ -1,0 +1,51 @@
+---
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+
+type Props = {
+  href: string;
+  index?: string;
+  title: string;
+  summary: string;
+  layout?: 'row' | 'panel';
+};
+
+const { href, index, title, summary, layout = 'row' } = Astro.props;
+---
+
+{
+  layout === 'row' ? (
+    <a
+      href={href}
+      class="group grid gap-3 border-t border-line py-6 transition-colors duration-200 hover:bg-canvas/80 sm:grid-cols-[4.5rem_1fr_auto] sm:items-baseline sm:gap-8 sm:py-7"
+    >
+      {index && (
+        <span class="font-mono text-xs tracking-[0.18em] text-mute">{index}</span>
+      )}
+      <span>
+        <span class="block text-lg font-semibold text-navy sm:text-xl">{title}</span>
+        <span class="mt-1 block max-w-2xl text-sm leading-relaxed text-mute sm:text-[0.95rem]">
+          {summary}
+        </span>
+      </span>
+      <span class="inline-flex items-center gap-1 self-center text-sm font-medium text-navy">
+        View
+        <ArrowUpRight class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      </span>
+    </a>
+  ) : (
+    <a
+      href={href}
+      class="group flex h-full flex-col border border-line bg-white p-6 transition-colors duration-200 hover:border-navy/30"
+    >
+      {index && (
+        <span class="font-mono text-xs tracking-[0.18em] text-mute">{index}</span>
+      )}
+      <h3 class="mt-4 text-lg font-semibold text-navy">{title}</h3>
+      <p class="mt-2 flex-1 text-sm leading-relaxed text-mute">{summary}</p>
+      <span class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-navy">
+        View service
+        <ArrowUpRight class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      </span>
+    </a>
+  )
+}

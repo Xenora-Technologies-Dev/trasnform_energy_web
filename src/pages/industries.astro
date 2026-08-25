@@ -1,0 +1,55 @@
+﻿---
+import PageLayout from '@/layouts/PageLayout.astro';
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import Photo from '@/components/Photo.astro';
+import { industrySectors, industriesIntro } from '@/data/industries';
+import { photos } from '@/data/photos';
+
+const description =
+  'Potential application areas for Transform Energy Consultancy based on electrical engineering, regulatory affairs, renewable energy, and project-support services — not a claimed client-sector list.';
+---
+
+<PageLayout
+  title="Energy Application Areas"
+  description={description}
+  path="/industries"
+  ogTitle="Energy Application Areas"
+  ogDescription={description}
+  eyebrow={industriesIntro.eyebrow}
+  heading={industriesIntro.heading}
+  lede={industriesIntro.lede}
+  crumbs={[{ href: '/', label: 'Home' }, { label: 'Industries' }]}
+  ctaTitle="Discuss a potential assignment."
+  ctaBody="Write with a short note on the power-sector or energy-project requirement."
+>
+  <section class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+    <AnimatedReveal>
+      <p class="max-w-3xl text-base leading-relaxed text-mute sm:text-lg">{industriesIntro.body}</p>
+    </AnimatedReveal>
+
+    <ol class="mt-14 grid gap-10 md:grid-cols-2">
+      {
+        industrySectors.map((sector, index) => (
+          <li>
+            <AnimatedReveal>
+              <article>
+                <Photo
+                  src={photos[sector.photo]}
+                  alt=""
+                  class="overflow-hidden border border-line"
+                  imgClass="h-52 w-full object-cover"
+                  sizes="(min-width: 768px) 45vw, 100vw"
+                />
+                <p class="mt-5 font-mono text-[0.65rem] tracking-[0.18em] text-mute">
+                  {String(index + 1).padStart(2, '0')}
+                </p>
+                <h2 class="mt-2 text-xl font-semibold text-navy">{sector.title}</h2>
+                <p class="mt-2 text-sm leading-relaxed text-mute">{sector.body}</p>
+              </article>
+            </AnimatedReveal>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</PageLayout>

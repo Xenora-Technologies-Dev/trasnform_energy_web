@@ -1,0 +1,51 @@
+﻿---
+import Button from '@/components/Button.astro';
+import { contact } from '@/data/company';
+
+type Props = {
+  title?: string;
+  body?: string;
+  tone?: 'light' | 'navy';
+  ctaLabel?: string;
+  ctaHref?: string;
+  id?: string;
+};
+
+const {
+  title = 'Tell us about the assignment.',
+  body = 'Write with a short note on the engineering, regulatory, or project-support requirement.',
+  tone = 'navy',
+  ctaLabel = 'Get in touch',
+  ctaHref = '/contact',
+  id,
+} = Astro.props;
+
+const isNavy = tone === 'navy';
+---
+
+<section
+  id={id}
+  class:list={['relative overflow-hidden', id && 'scroll-mt-28', isNavy ? 'bg-navy text-white' : 'bg-canvas text-ink']}
+>
+  <div class="pointer-events-none absolute inset-x-0 top-0 h-px energy-lines" aria-hidden="true"></div>
+  <div class="relative mx-auto flex shell flex-col gap-8 px-6 py-16 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:py-20">
+    <div class="max-w-2xl">
+      <p class:list={['mb-3 text-[0.7rem] font-semibold uppercase tracking-[0.22em]', isNavy ? 'text-spark' : 'text-energy']}>
+        Contact
+      </p>
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>
+      <p class:list={['mt-4 max-w-xl text-base leading-relaxed', isNavy ? 'text-white/75' : 'text-mute']}>
+        {body}
+      </p>
+      <a
+        href={`mailto:${contact.email}`}
+        class:list={['mt-3 inline-block text-sm font-medium hover:underline', isNavy ? 'text-white' : 'text-navy']}
+      >
+        {contact.email}
+      </a>
+    </div>
+    <Button href={ctaHref} variant={isNavy ? 'on-dark' : 'primary'}>
+      {ctaLabel}
+    </Button>
+  </div>
+</section>

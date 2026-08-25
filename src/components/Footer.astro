@@ -1,0 +1,71 @@
+﻿---
+import Logo from '@/components/Logo.astro';
+import { company, contact, office } from '@/data/company';
+import { footerNav } from '@/data/navigation';
+import { services } from '@/data/services';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-navy-dark text-white">
+  <div class="mx-auto grid shell gap-12 px-6 py-14 sm:px-8 md:grid-cols-2 lg:grid-cols-4 lg:py-16">
+    <div>
+      <Logo size="footer" />
+      <p class="mt-5 text-sm font-semibold">{company.publicName}</p>
+      <p class="mt-3 max-w-xs text-sm leading-relaxed text-white/70">
+        {company.positioning}
+      </p>
+    </div>
+    <div>
+      <p class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-spark">Navigation</p>
+      <ul class="mt-4 space-y-2">
+        {
+          footerNav.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-white/75 transition-colors hover:text-white">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <p class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-spark">Services</p>
+      <ul class="mt-4 space-y-2">
+        {
+          services.map((service) => (
+            <li>
+              <a href={service.href} class="text-sm text-white/75 transition-colors hover:text-white">
+                {service.shortTitle}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <p class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-spark">Contact</p>
+      <ul class="mt-4 space-y-3 text-sm text-white/75">
+        <li>
+          <a href={`mailto:${contact.email}`} class="font-medium text-white hover:underline">
+            {contact.email}
+          </a>
+        </li>
+        <li>
+          <a href={contact.mapsUrl} class="hover:underline" rel="noopener noreferrer" target="_blank">
+            {office.lines.map((line) => (
+              <span class="block">{line}</span>
+            ))}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="mx-auto flex shell flex-col gap-1 px-6 py-5 text-xs text-white/50 sm:px-8 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} {company.legalName}</p>
+      <p>{office.locality}, {office.region}</p>
+    </div>
+  </div>
+</footer>

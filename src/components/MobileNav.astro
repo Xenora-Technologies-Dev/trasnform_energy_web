@@ -1,0 +1,90 @@
+---
+import ChevronDown from '@lucide/astro/icons/chevron-down';
+import X from '@lucide/astro/icons/x';
+import { primaryNav } from '@/data/navigation';
+import { company } from '@/data/company';
+import Logo from '@/components/Logo.astro';
+import Button from '@/components/Button.astro';
+---
+
+<div
+  hidden
+  id="mobile-nav"
+  data-mobile-nav
+  class="fixed inset-0 z-[70] bg-navy-dark/40 lg:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="mobile-nav-title"
+>
+  <div class="absolute inset-y-0 right-0 flex h-full w-full max-w-md flex-col bg-white shadow-xl">
+    <div class="flex items-center justify-between border-b border-line px-4 py-3">
+      <p id="mobile-nav-title" class="sr-only">{company.publicName} menu</p>
+      <Logo size="compact" />
+      <button
+        type="button"
+        class="inline-flex h-11 w-11 items-center justify-center border border-line text-navy"
+        data-mobile-close
+        aria-label="Close menu"
+      >
+        <X class="h-5 w-5" />
+      </button>
+    </div>
+    <nav aria-label="Mobile primary" class="flex-1 overflow-y-auto px-4 py-6">
+      <ul class="space-y-1">
+        {
+          primaryNav.map((item) => (
+            <li>
+              {item.children ? (
+                <div>
+                  <button
+                    type="button"
+                    class="flex w-full items-center justify-between py-3 text-left text-base font-semibold text-navy"
+                    data-mobile-services
+                    aria-expanded="false"
+                    aria-controls="mobile-services"
+                  >
+                    {item.label}
+                    <ChevronDown class="mobile-services-chevron h-4 w-4" aria-hidden="true" />
+                  </button>
+                  <ul
+                    id="mobile-services"
+                    hidden
+                    data-mobile-services-panel
+                    class="mb-2 border-l border-line pl-4"
+                  >
+                    <li>
+                      <a href="/services" class="block py-2 text-sm font-medium text-navy">
+                        All services
+                      </a>
+                    </li>
+                    {item.children.map((child) => (
+                      <li>
+                        <a href={child.href} class="block py-2 text-sm text-ink/80">
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <a href={item.href} class="block py-3 text-base font-semibold text-navy">
+                  {item.label}
+                </a>
+              )}
+            </li>
+          ))
+        }
+        <li>
+          <a href="/contact" class="block py-3 text-base font-semibold text-navy sm:hidden">
+            Contact
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="border-t border-line p-4">
+      <Button href="/contact" variant="primary" class="w-full">
+        Contact
+      </Button>
+    </div>
+  </div>
+</div>

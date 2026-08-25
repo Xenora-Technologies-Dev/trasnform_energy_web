@@ -1,0 +1,32 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/home/Hero.astro';
+import Experience from '@/components/home/Experience.astro';
+import AboutPreview from '@/components/home/AboutPreview.astro';
+import ExpertiseEcosystem from '@/components/home/ExpertiseEcosystem.astro';
+import HomeServices from '@/components/home/HomeServices.astro';
+import WhyTransform from '@/components/home/WhyTransform.astro';
+import RenewableEnergy from '@/components/home/RenewableEnergy.astro';
+import PowerMarket from '@/components/home/PowerMarket.astro';
+import ProjectExperience from '@/components/home/ProjectExperience.astro';
+import CtaSection from '@/components/CtaSection.astro';
+---
+
+<BaseLayout path="/">
+  <Hero />
+  <Experience />
+  <AboutPreview />
+  <ExpertiseEcosystem />
+  <HomeServices />
+  <WhyTransform />
+  <RenewableEnergy />
+  <PowerMarket />
+  <ProjectExperience />
+  <CtaSection
+    id="enquire"
+    title="Have an energy or power-sector requirement?"
+    body="Discuss engineering, regulatory, renewable-energy, project, or technical documentation needs with Transform Energy. Write with a short note on the assignment."
+    ctaLabel="Talk to Transform Energy"
+    ctaHref="/contact"
+  />
+</BaseLayout>

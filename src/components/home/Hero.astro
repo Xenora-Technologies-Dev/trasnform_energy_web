@@ -1,0 +1,63 @@
+﻿---
+import Button from '@/components/Button.astro';
+import EnergyLines from '@/components/EnergyLines.astro';
+import Photo from '@/components/Photo.astro';
+import { photos } from '@/data/photos';
+
+const hud = ['Power transmission', 'Electrical grid', 'Engineering consultancy', 'Regulated markets'];
+---
+
+<section class="relative isolate min-h-[calc(100svh-5.5rem)] overflow-hidden bg-navy-dark text-white">
+  <Photo
+    src={photos.transmission}
+    alt="High-voltage transmission lines at dusk"
+    priority
+    class="absolute inset-0 h-full w-full overflow-hidden"
+    imgClass="h-full w-full object-cover object-[center_40%]"
+    sizes="100vw"
+  />
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-navy-dark via-navy-dark/88 to-navy/35"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="technical-grid pointer-events-none absolute inset-0 opacity-25 mix-blend-soft-light" aria-hidden="true"></div>
+  <EnergyLines tone="dark" />
+
+  <div class="relative z-10 mx-auto flex min-h-[calc(100svh-5.5rem)] shell flex-col justify-end px-6 pb-0 pt-16 sm:px-8 sm:pt-20 lg:justify-center lg:pt-8 xl:px-12">
+    <div class="max-w-2xl pb-16 sm:pb-20 lg:pb-24">
+      <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-spark">
+        Power and energy consultancy
+      </p>
+      <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-[3.6rem] lg:leading-[1.08]">
+        Engineering Expertise.<br />
+        Energy Intelligence.
+      </h1>
+      <p class="mt-6 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
+        Transform Energy combines electrical engineering, regulatory understanding, renewable-energy
+        expertise, project support, and power-market knowledge for clients operating in the energy
+        sector.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href="#services" variant="on-dark" class="px-6 py-3">
+          Explore Our Services
+        </Button>
+        <Button href="/contact" variant="outline-on-dark" class="px-6 py-3">
+          Talk to Our Experts
+        </Button>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative z-10 border-t border-white/15 bg-navy-dark/85">
+    <ul class="mx-auto grid shell grid-cols-2 gap-px sm:grid-cols-4">
+      {
+        hud.map((item) => (
+          <li class="px-6 py-3.5 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-white/75 sm:px-8 xl:px-12">
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

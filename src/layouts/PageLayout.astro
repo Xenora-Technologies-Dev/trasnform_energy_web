@@ -1,0 +1,62 @@
+---
+import type { ImageMetadata } from 'astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import CtaSection from '@/components/CtaSection.astro';
+import type { SeoInput } from '@/data/seo';
+import type { ServiceDiagram } from '@/data/services';
+
+type Crumb = { href?: string; label: string };
+
+type Props = SeoInput & {
+  eyebrow?: string;
+  heading: string;
+  lede?: string;
+  crumbs?: Crumb[];
+  showCta?: boolean;
+  heroTone?: 'light' | 'navy';
+  heroPhoto?: ImageMetadata;
+  heroPhotoAlt?: string;
+  diagram?: ServiceDiagram;
+  ctaTitle?: string;
+  ctaBody?: string;
+  ctaLabel?: string;
+};
+
+const {
+  eyebrow,
+  heading,
+  lede,
+  crumbs,
+  showCta = true,
+  heroTone = 'light',
+  heroPhoto,
+  heroPhotoAlt,
+  diagram,
+  ctaTitle,
+  ctaBody,
+  ctaLabel,
+  ...seo
+} = Astro.props;
+---
+
+<BaseLayout {...seo}>
+  <PageHero
+    eyebrow={eyebrow}
+    title={heading}
+    description={lede}
+    crumbs={crumbs}
+    tone={heroTone}
+    photo={heroPhoto}
+    photoAlt={heroPhotoAlt}
+    diagram={diagram}
+  >
+    <slot name="hero" />
+  </PageHero>
+  <slot />
+  {
+    showCta && (
+      <CtaSection title={ctaTitle} body={ctaBody} ctaLabel={ctaLabel} />
+    )
+  }
+</BaseLayout>

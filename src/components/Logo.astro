@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@/assets/brand/tecs-logo.jpg';
+import { company } from '@/data/company';
+
+type Props = {
+  size?: 'header' | 'compact' | 'footer' | 'hero' | 'contact';
+  linked?: boolean;
+  class?: string;
+};
+
+const { size = 'header', linked = true, class: className = '' } = Astro.props;
+
+const sizes = {
+  header: { height: 72, widths: [144, 216, 288], className: 'h-16 w-auto md:h-[4.5rem]' },
+  compact: { height: 56, widths: [112, 168, 224], className: 'h-14 w-auto' },
+  footer: { height: 88, widths: [176, 264, 352], className: 'h-[5.5rem] w-auto md:h-24' },
+  hero: { height: 280, widths: [280, 420, 560], className: 'h-[13.5rem] w-auto sm:h-64 lg:h-[18.5rem]' },
+  contact: { height: 200, widths: [200, 300, 400], className: 'h-44 w-auto md:h-52' },
+} as const;
+
+const current = sizes[size];
+const onDark = size === 'footer';
+const width = Math.round((logo.width / logo.height) * current.height);
+const Tag = linked ? 'a' : 'div';
+---
+
+<Tag
+  {...(linked ? { href: '/', 'aria-label': `${company.publicName} home` } : {})}
+  class:list={[
+    'brand-logo-link inline-flex shrink-0 items-center justify-center',
+    onDark && 'rounded-sm bg-white p-2 md:p-2.5',
+    className,
+  ]}
+>
+  <Image
+    src={logo}
+    alt={`${company.legalName} official logo`}
+    width={width}
+    height={current.height}
+    widths={[...current.widths]}
+    sizes={`${current.height}px`}
+    format="jpg"
+    quality={90}
+    class:list={['brand-logo h-auto max-w-none object-contain', current.className]}
+    loading={size === 'header' || size === 'hero' ? 'eager' : 'lazy'}
+    decoding={size === 'header' || size === 'hero' ? 'sync' : 'async'}
+  />
+</Tag>

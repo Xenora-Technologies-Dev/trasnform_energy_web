@@ -1,0 +1,75 @@
+﻿---
+import PageLayout from '@/layouts/PageLayout.astro';
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import ArticleCard from '@/components/ArticleCard.astro';
+import Photo from '@/components/Photo.astro';
+import { getPublishedInsights } from '@/lib/content';
+import { photos } from '@/data/photos';
+import { insightsIntro, insightTopics } from '@/data/insights';
+
+const insights = (await getPublishedInsights()).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const description =
+  'Technical insights from Transform Energy Consultancy on regulation, power markets, renewable energy, and project documentation. Articles appear here when they are published.';
+---
+
+<PageLayout
+  title="Insights"
+  description={description}
+  path="/insights"
+  ogTitle="Insights"
+  ogDescription={description}
+  eyebrow={insightsIntro.eyebrow}
+  heading={insightsIntro.heading}
+  lede={insightsIntro.lede}
+  crumbs={[{ href: '/', label: 'Home' }, { label: 'Insights' }]}
+  ctaTitle="Looking for a view on a live matter?"
+  ctaBody="Write with a short note on the regulatory, market, or project-documentation question."
+>
+  <section class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+    {
+      insights.length === 0 ? (
+        <AnimatedReveal>
+          <div class="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
+            <Photo
+              src={photos.documents}
+              alt=""
+              class="overflow-hidden border border-line"
+              imgClass="h-72 w-full object-cover sm:h-80"
+              sizes="(min-width: 1024px) 520px, 100vw"
+            />
+            <div>
+              <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-energy">
+                {insightsIntro.emptyTitle}
+              </p>
+              <h2 class="mt-3 text-2xl font-semibold text-navy sm:text-3xl">
+                A place for technical articles.
+              </h2>
+              <p class="mt-4 text-base leading-relaxed text-mute">{insightsIntro.emptyBody}</p>
+              <ul class="mt-8 space-y-0 border-t border-line">
+                {insightTopics.map((topic) => (
+                  <li class="border-b border-line py-3 text-sm text-ink">{topic}</li>
+                ))}
+              </ul>
+              <p class="mt-8 text-sm text-mute">
+                For a view on a live matter,{' '}
+                <a href="/contact" class="font-semibold text-navy hover:underline">
+                  write to us
+                </a>
+                .
+              </p>
+            </div>
+          </div>
+        </AnimatedReveal>
+      ) : (
+        <div>
+          {insights.map((entry) => (
+            <ArticleCard entry={entry} />
+          ))}
+        </div>
+      )
+    }
+  </section>
+</PageLayout>

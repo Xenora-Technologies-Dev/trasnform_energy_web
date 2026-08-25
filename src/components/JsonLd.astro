@@ -1,0 +1,56 @@
+---
+import { company, contact, office } from '@/data/company';
+import { services } from '@/data/services';
+import { absoluteUrl } from '@/data/seo';
+
+const origin = Astro.site;
+---
+
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: company.publicName,
+    legalName: company.legalName,
+    alternateName: company.shortName,
+    description:
+      'Electrical engineering consultancy with over three decades of leadership experience across power infrastructure, renewable energy, regulatory affairs, project support, and power market operation.',
+    url: origin ? new URL('/', origin).toString() : undefined,
+    image: origin ? absoluteUrl('/brand/tecs-logo.jpg', origin) : undefined,
+    email: contact.email,
+    slogan: company.vision,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: `${office.lines[0]}, ${office.lines[1]}`,
+      addressLocality: 'Thrissur',
+      addressRegion: office.region,
+      postalCode: office.postalCode,
+      addressCountry: office.country,
+    },
+    knowsAbout: [
+      'Electrical engineering consultancy',
+      'Regulatory affairs',
+      'Project management consultancy',
+      'Renewable energy',
+      'Power market operation',
+      'Scheduling and dispatch',
+      'Technical documentation',
+      'Safety audit',
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Consultancy services',
+      itemListElement: services.map((service) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: service.title,
+          description: service.summary,
+          url: origin ? absoluteUrl(service.href, origin) : service.href,
+        },
+      })),
+    },
+  })}
+/>

@@ -1,0 +1,66 @@
+﻿---
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import Button from '@/components/Button.astro';
+import Photo from '@/components/Photo.astro';
+import { getPublishedProjects } from '@/lib/content';
+import { projectFramework } from '@/data/homepage';
+import { photos } from '@/data/photos';
+
+const projects = await getPublishedProjects();
+---
+
+<section id="projects" class="scroll-mt-28 bg-canvas">
+  <div class="mx-auto shell px-6 py-16 sm:px-8 lg:py-24">
+    <div class="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
+      <AnimatedReveal>
+        <SectionHeading
+          eyebrow="Project experience"
+          title="Assignments discussed directly."
+          kicker={
+            projects.length === 0
+              ? 'Named case studies are not listed here. The framework below describes the kinds of work the practice supports — not a public portfolio of clients.'
+              : 'Selected assignments across infrastructure, renewables, regulation, and project delivery.'
+          }
+        />
+      </AnimatedReveal>
+      <Photo
+        src={photos.transmission}
+        alt="Transmission infrastructure"
+        class="hidden overflow-hidden border border-line lg:block"
+        imgClass="h-28 w-48 object-cover"
+        sizes="192px"
+      />
+    </div>
+
+    {
+      projects.length === 0 ? (
+        <ul class="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2">
+          {projectFramework.map((item) => (
+            <li class="bg-white p-6 sm:p-8">
+              <AnimatedReveal>
+                <h3 class="text-lg font-semibold text-navy">{item.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-mute">{item.body}</p>
+              </AnimatedReveal>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <ul class="mt-12 grid gap-4 md:grid-cols-2">
+          {projects.map((project) => (
+            <li class="border border-line bg-white p-6">
+              <p class="text-xs uppercase tracking-[0.16em] text-mute">{project.data.sector}</p>
+              <h3 class="mt-2 text-xl font-semibold text-navy">{project.data.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-mute">{project.data.summary}</p>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <div class="mt-10 flex flex-wrap items-center gap-4">
+      <Button href="/projects" variant="secondary">View projects</Button>
+      <Button href="/contact" variant="primary">Discuss an assignment</Button>
+    </div>
+  </div>
+</section>

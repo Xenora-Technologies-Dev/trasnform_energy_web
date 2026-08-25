@@ -1,0 +1,105 @@
+﻿---
+import PageLayout from '@/layouts/PageLayout.astro';
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import RelatedServices from '@/components/RelatedServices.astro';
+import ServiceDiagram from '@/components/ServiceDiagram.astro';
+import Photo from '@/components/Photo.astro';
+import Button from '@/components/Button.astro';
+import { photos } from '@/data/photos';
+import { contact } from '@/data/company';
+import type { Service } from '@/data/services';
+
+type Props = {
+  service: Service;
+};
+
+const { service } = Astro.props;
+const heroPhoto = service.heroPhoto ? photos[service.heroPhoto] : undefined;
+---
+
+<PageLayout
+  title={service.seoTitle}
+  description={service.seoDescription}
+  path={service.href}
+  ogTitle={service.ogTitle}
+  ogDescription={service.seoDescription}
+  eyebrow="Services"
+  heading={service.title}
+  lede={service.summary}
+  heroTone="navy"
+  heroPhoto={heroPhoto}
+  heroPhotoAlt=""
+  diagram={service.diagram}
+  crumbs={[
+    { href: '/', label: 'Home' },
+    { href: '/services', label: 'Services' },
+    { label: service.shortTitle },
+  ]}
+  ctaTitle="Discuss this assignment."
+  ctaBody={`Write with a short note on the ${service.shortTitle.toLowerCase()} requirement.`}
+  ctaLabel="Contact Transform Energy"
+>
+  <section class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+    <AnimatedReveal>
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start">
+        <div>
+          <SectionHeading eyebrow="Overview" title="How we can help" />
+          <p class="mt-6 max-w-2xl text-base leading-relaxed text-mute sm:text-lg">
+            {service.description}
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <Button href="/contact" variant="primary">Talk to Transform Energy</Button>
+            <Button href={`mailto:${contact.email}`} variant="secondary">Email us</Button>
+          </div>
+        </div>
+        <aside class="border border-line bg-canvas p-6 sm:p-7">
+          <p class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-energy">Scope</p>
+          <ul class="mt-4 space-y-3">
+            {
+              service.focus.map((item) => (
+                <li class="border-t border-line pt-3 text-sm leading-relaxed text-ink first:border-t-0 first:pt-0">
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+        </aside>
+      </div>
+    </AnimatedReveal>
+  </section>
+
+  <section class="border-y border-line bg-white">
+    <div class="mx-auto grid shell items-center gap-12 px-6 py-16 sm:px-8 lg:grid-cols-2 lg:py-20">
+      <AnimatedReveal>
+        <SectionHeading eyebrow="Why it matters" title="Why this capability sits in the brief." />
+        <p class="mt-6 max-w-xl text-base leading-relaxed text-mute sm:text-lg">
+          {service.whyItMatters}
+        </p>
+        <p class="mt-6 text-sm text-mute">
+          <a href="/contact" class="font-semibold text-navy hover:underline">Contact the practice</a>
+          <span> with a short note on the assignment.</span>
+        </p>
+      </AnimatedReveal>
+      <AnimatedReveal>
+        <div class="border border-line bg-canvas">
+          <Photo
+            src={photos[service.photo]}
+            alt=""
+            class="overflow-hidden"
+            imgClass="h-56 w-full object-cover sm:h-72"
+            sizes="(min-width: 1024px) 520px, 100vw"
+          />
+          <ServiceDiagram
+            variant={service.diagram}
+            idPrefix={`${service.diagram}-detail`}
+            caption="Illustrative only — not a project drawing."
+            class="h-44 w-full border-t border-line p-3"
+          />
+        </div>
+      </AnimatedReveal>
+    </div>
+  </section>
+
+  <RelatedServices slug={service.slug} />
+</PageLayout>

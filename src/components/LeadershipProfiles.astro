@@ -1,0 +1,30 @@
+﻿---
+import SectionHeading from '@/components/SectionHeading.astro';
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import { leadershipProfiles } from '@/data/company';
+---
+
+{
+  leadershipProfiles.length > 0 && (
+    <section class="border-t border-line bg-white">
+      <div class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+        <AnimatedReveal>
+          <SectionHeading
+            eyebrow="Our Leadership"
+            title="The people behind the practice."
+            kicker="Profiles are published only when names and roles have been supplied."
+          />
+        </AnimatedReveal>
+        <ul class="mt-10 grid gap-6 md:grid-cols-2">
+          {leadershipProfiles.map((person) => (
+            <li class="border border-line p-6 sm:p-8">
+              <h3 class="text-xl font-semibold text-navy">{person.name}</h3>
+              <p class="mt-1 text-sm font-medium text-energy">{person.role}</p>
+              <p class="mt-4 text-sm leading-relaxed text-mute">{person.summary}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

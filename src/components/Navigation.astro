@@ -1,0 +1,51 @@
+---
+import ChevronDown from '@lucide/astro/icons/chevron-down';
+import { primaryNav } from '@/data/navigation';
+
+type Props = {
+  currentPath: string;
+};
+
+const { currentPath } = Astro.props;
+
+const isCurrent = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath === href || currentPath.startsWith(`${href}/`);
+---
+
+<nav aria-label="Primary" class="hidden lg:block">
+  <ul class="flex items-center gap-1">
+    {
+      primaryNav.map((item) => (
+        <li>
+          {item.children ? (
+            <button
+              type="button"
+              class:list={[
+                'inline-flex items-center gap-1 px-2.5 py-2 text-sm font-medium tracking-wide transition-colors xl:px-3',
+                isCurrent('/services') ? 'text-navy' : 'text-ink/80 hover:text-navy',
+              ]}
+              data-services-trigger
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-controls="services-menu"
+            >
+              {item.label}
+              <ChevronDown class="services-chevron h-3.5 w-3.5" aria-hidden="true" />
+            </button>
+          ) : (
+            <a
+              href={item.href}
+              class:list={[
+                'inline-flex px-2.5 py-2 text-sm font-medium tracking-wide transition-colors xl:px-3',
+                isCurrent(item.href) ? 'text-navy' : 'text-ink/80 hover:text-navy',
+              ]}
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</nav>

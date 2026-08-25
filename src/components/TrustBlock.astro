@@ -1,0 +1,46 @@
+﻿---
+import { leadershipDomains } from '@/data/company';
+
+type Props = {
+  tone?: 'light' | 'navy';
+  eyebrow?: string;
+  title?: string;
+  kicker?: string;
+};
+
+const {
+  tone = 'light',
+  eyebrow = 'Leadership experience',
+  title = 'Three decades',
+  kicker = 'of leadership experience across the energy and power sector.',
+} = Astro.props;
+const isNavy = tone === 'navy';
+---
+
+<section class:list={[isNavy ? 'bg-navy-dark text-white' : 'bg-white']}>
+  <div class="mx-auto grid shell gap-10 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,18rem)_1fr] lg:py-16 xl:grid-cols-[minmax(0,24rem)_1fr]">
+    <div>
+      <p class:list={['text-[0.7rem] font-semibold uppercase tracking-[0.22em]', isNavy ? 'text-spark' : 'text-energy']}>
+        {eyebrow}
+      </p>
+      <p class="mt-3 text-3xl font-semibold tracking-tight">{title}</p>
+      <p class:list={['mt-2 text-sm leading-relaxed', isNavy ? 'text-white/70' : 'text-mute']}>
+        {kicker}
+      </p>
+    </div>
+    <ul class="grid gap-px sm:grid-cols-2 lg:grid-cols-3">
+      {
+        leadershipDomains.map((domain) => (
+          <li
+            class:list={[
+              'border px-4 py-4 text-sm leading-snug',
+              isNavy ? 'border-white/10 bg-navy/40' : 'border-line bg-canvas/60',
+            ]}
+          >
+            {domain}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

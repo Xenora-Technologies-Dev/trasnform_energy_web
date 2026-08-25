@@ -1,0 +1,33 @@
+---
+import { company } from '@/data/company';
+import { absoluteUrl, defaultSeo, pageTitle, type SeoInput } from '@/data/seo';
+
+type Props = SeoInput;
+
+const { title, description, path, type = 'website', image, noindex = false, ogTitle, ogDescription } =
+  Astro.props;
+const canonical = absoluteUrl(path, Astro.site);
+const resolvedTitle = pageTitle(title);
+const resolvedDescription = description ?? defaultSeo.description;
+const resolvedOgTitle = ogTitle ?? resolvedTitle;
+const resolvedOgDescription = ogDescription ?? resolvedDescription;
+const ogImage = absoluteUrl(image ?? defaultSeo.image.src, Astro.site);
+---
+
+<title>{resolvedTitle}</title>
+<meta name="description" content={resolvedDescription} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={company.publicName} />
+<meta property="og:title" content={resolvedOgTitle} />
+<meta property="og:description" content={resolvedOgDescription} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={defaultSeo.image.alt} />
+<meta property="og:locale" content="en" />
+<meta name="twitter:card" content={defaultSeo.twitterCard} />
+<meta name="twitter:title" content={resolvedOgTitle} />
+<meta name="twitter:description" content={resolvedOgDescription} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={defaultSeo.image.alt} />

@@ -1,0 +1,61 @@
+﻿---
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import Photo from '@/components/Photo.astro';
+import { photos } from '@/data/photos';
+---
+
+<section id="renewable" class="scroll-mt-28 bg-white">
+  <div class="mx-auto grid shell items-center gap-12 px-6 py-16 sm:px-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16 lg:py-24">
+    <AnimatedReveal>
+      <SectionHeading
+        eyebrow="Renewable energy"
+        title="Renewables inside a wider energy practice."
+      />
+      <div class="mt-6 max-w-xl space-y-4 text-base leading-relaxed text-mute sm:text-lg">
+        <p>
+          We advise on renewable energy development and adoption, with attention to technical quality,
+          compliance, and how a project sits within the wider power system and market.
+        </p>
+        <p>
+          The work is consultancy — not engineering, procurement, and construction. Solar, wind, and
+          related generation are treated as part of the same engineering, regulatory, and project-support
+          capability.
+        </p>
+      </div>
+      <p class="mt-8">
+        <a href="/services/renewable-energy" class="text-sm font-semibold text-navy hover:underline">
+          Renewable energy consultancy
+        </a>
+      </p>
+    </AnimatedReveal>
+
+    <AnimatedReveal>
+      <div class="relative">
+        <Photo
+          src={photos.wind}
+          alt="Onshore wind generation at dusk"
+          class="overflow-hidden border border-line"
+          imgClass="h-[18rem] w-full object-cover sm:h-[22rem] lg:h-[26rem]"
+          sizes="(min-width: 1024px) 560px, 100vw"
+        />
+        <div class="mt-3 grid grid-cols-2 gap-3">
+          <Photo
+            src={photos.solar}
+            alt="Utility-scale solar array"
+            class="overflow-hidden border border-line"
+            imgClass="h-28 w-full object-cover sm:h-32"
+            sizes="(min-width: 1024px) 270px, 50vw"
+          />
+          <Photo
+            src={photos.offshore}
+            alt="Offshore wind infrastructure"
+            class="overflow-hidden border border-line"
+            imgClass="h-28 w-full object-cover sm:h-32"
+            sizes="(min-width: 1024px) 270px, 50vw"
+          />
+        </div>
+      </div>
+    </AnimatedReveal>
+  </div>
+</section>

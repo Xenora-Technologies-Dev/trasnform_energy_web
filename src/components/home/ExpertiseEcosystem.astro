@@ -1,0 +1,49 @@
+﻿---
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import { capabilityChainWithHrefs } from '@/data/homepage';
+---
+
+<section id="expertise" class="scroll-mt-28 bg-white">
+  <div class="mx-auto shell px-6 py-16 sm:px-8 lg:py-24">
+    <AnimatedReveal>
+      <SectionHeading
+        eyebrow="Expertise ecosystem"
+        title="How the capabilities connect."
+        kicker="Engineering, regulation, project support, renewables, markets, documentation, and safety sit in one consultancy stack — not as isolated offerings."
+      />
+    </AnimatedReveal>
+
+    <div class="relative mt-12 lg:mt-16">
+      <div
+        class="expertise-spine pointer-events-none absolute bottom-4 left-[1.15rem] top-4 w-px lg:bottom-auto lg:left-[calc(100%/14)] lg:right-[calc(100%/14)] lg:top-[1.15rem] lg:h-px lg:w-auto"
+        aria-hidden="true"
+      >
+      </div>
+      <ol class="grid gap-0 lg:grid-cols-7">
+        {
+          capabilityChainWithHrefs.map((item, index) => (
+            <li class="relative">
+              <a
+                href={item.href}
+                class="group flex gap-4 py-4 lg:flex-col lg:items-center lg:gap-0 lg:px-2 lg:pt-0 lg:text-center"
+              >
+                <span class="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-navy bg-white font-mono text-[0.65rem] tracking-[0.12em] text-navy transition-colors duration-200 group-hover:bg-navy group-hover:text-white">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span class="min-w-0 lg:mt-5">
+                  <span class="block text-sm font-semibold leading-snug text-navy sm:text-[0.95rem]">
+                    {item.label}
+                  </span>
+                  <span class="mt-1 block text-xs leading-relaxed text-mute lg:mt-2">
+                    {item.note}
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>

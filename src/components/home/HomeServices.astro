@@ -1,0 +1,76 @@
+﻿---
+import Zap from '@lucide/astro/icons/zap';
+import Scale from '@lucide/astro/icons/scale';
+import ClipboardCheck from '@lucide/astro/icons/clipboard-check';
+import Leaf from '@lucide/astro/icons/leaf';
+import Activity from '@lucide/astro/icons/activity';
+import FileText from '@lucide/astro/icons/file-text';
+import ShieldCheck from '@lucide/astro/icons/shield-check';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import { services } from '@/data/services';
+
+const icons = {
+  'electrical-engineering': Zap,
+  'regulatory-affairs': Scale,
+  'project-management': ClipboardCheck,
+  'renewable-energy': Leaf,
+  'power-market': Activity,
+  'technical-documentation': FileText,
+  'safety-audit': ShieldCheck,
+} as const;
+---
+
+<section id="services" class="scroll-mt-28 border-t border-line bg-canvas">
+  <div class="mx-auto shell px-6 py-16 sm:px-8 lg:py-24">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <AnimatedReveal>
+        <SectionHeading
+          eyebrow="Services"
+          title="Consultancy across the energy assignment."
+          kicker="Electrical engineering, regulatory affairs, project supervision, renewable energy, power-market advisory, documentation, and safety audit."
+        />
+      </AnimatedReveal>
+      <a href="/services" class="shrink-0 text-sm font-semibold text-navy hover:underline">
+        View all services
+      </a>
+    </div>
+
+    <ul class="mt-12 grid gap-4 md:grid-cols-2">
+      {
+        services.map((service, index) => {
+          const Icon = icons[service.slug as keyof typeof icons];
+          return (
+            <li>
+              <AnimatedReveal class="h-full">
+                <a
+                  href={service.href}
+                  class="group flex h-full flex-col border border-line bg-white p-6 transition-colors duration-200 hover:border-navy/30 sm:p-7"
+                >
+                  <div class="flex items-start justify-between gap-4">
+                    <span class="inline-flex h-10 w-10 items-center justify-center border border-line bg-canvas text-navy">
+                      {Icon && <Icon class="h-4 w-4" aria-hidden="true" />}
+                    </span>
+                    <span class="font-mono text-[0.65rem] tracking-[0.18em] text-mute">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <h3 class="mt-5 text-lg font-semibold text-navy sm:text-xl">{service.title}</h3>
+                  <p class="mt-2 flex-1 text-sm leading-relaxed text-mute">{service.summary}</p>
+                  <span class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-navy">
+                    Learn more
+                    <ArrowUpRight
+                      class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </a>
+              </AnimatedReveal>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>

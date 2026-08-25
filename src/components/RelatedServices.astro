@@ -1,0 +1,46 @@
+﻿---
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import SectionHeading from '@/components/SectionHeading.astro';
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import { getRelatedServices } from '@/data/services';
+
+type Props = {
+  slug: string;
+};
+
+const { slug } = Astro.props;
+const related = getRelatedServices(slug);
+---
+
+{
+  related.length > 0 && (
+    <section class="border-t border-line bg-canvas">
+      <div class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+        <AnimatedReveal>
+          <SectionHeading
+            eyebrow="Related services"
+            title="Other capabilities in the same practice."
+            kicker="Each service can be engaged on its own. These sit closest to this assignment type."
+          />
+        </AnimatedReveal>
+        <ul class="mt-10 grid gap-px border border-line bg-line md:grid-cols-3">
+          {related.map((service) => (
+            <li class="bg-white">
+              <a href={service.href} class="group flex h-full flex-col p-6 sm:p-7">
+                <h3 class="text-lg font-semibold text-navy">{service.shortTitle}</h3>
+                <p class="mt-2 flex-1 text-sm leading-relaxed text-mute">{service.summary}</p>
+                <span class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-navy">
+                  View service
+                  <ArrowUpRight
+                    class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden="true"
+                  />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

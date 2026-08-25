@@ -1,0 +1,179 @@
+﻿---
+import PageLayout from '@/layouts/PageLayout.astro';
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import TrustBlock from '@/components/TrustBlock.astro';
+import LeadershipProfiles from '@/components/LeadershipProfiles.astro';
+import Photo from '@/components/Photo.astro';
+import { company, professionalApproach } from '@/data/company';
+import { whyPillars } from '@/data/homepage';
+import { photos } from '@/data/photos';
+
+const aboutDescription =
+  'Transform Energy Consultancy is a current electrical engineering consultancy whose leadership brings over three decades of experience across power infrastructure, renewable energy, and regulation.';
+---
+
+<PageLayout
+  title="About Transform Energy Consultancy"
+  description={aboutDescription}
+  path="/about"
+  ogTitle="About Transform Energy Consultancy"
+  ogDescription={aboutDescription}
+  eyebrow="About"
+  heading="A current consultancy. Three decades of leadership experience behind it."
+  lede={company.positioning}
+  crumbs={[{ href: '/', label: 'Home' }, { label: 'About' }]}
+  ctaTitle="Have a power-sector requirement?"
+  ctaBody="Write with a short note on the engineering, regulatory, or project-support assignment."
+>
+  <section class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+    <AnimatedReveal>
+      <div class="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <SectionHeading eyebrow="Who we are" title="Electrical engineering consultancy for the energy sector." />
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-mute sm:text-lg">
+            <p>
+              Transform Energy Consultancy is a current consultancy organisation formed by seasoned
+              engineering professionals. We provide technically robust, compliant, and practical
+              consultancy support for power and energy work.
+            </p>
+            <p>
+              The practice covers electrical engineering, regulatory affairs, project supervision,
+              renewable energy, power-market advisory, technical documentation, and safety audit. We
+              are a consultancy — not a construction, contracting, or installation company.
+            </p>
+          </div>
+        </div>
+        <Photo
+          src={photos.engineering}
+          alt="Technical review in an engineering setting"
+          class="overflow-hidden border border-line"
+          imgClass="h-72 w-full object-cover sm:h-80 lg:h-[22rem]"
+          sizes="(min-width: 1024px) 520px, 100vw"
+        />
+      </div>
+    </AnimatedReveal>
+  </section>
+
+  <section class="border-y border-line bg-white">
+    <div class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+      <AnimatedReveal>
+        <div class="grid items-end gap-8 border-b border-line pb-10 lg:grid-cols-[minmax(0,24rem)_1fr] lg:gap-16 xl:grid-cols-[minmax(0,28rem)_1fr] xl:gap-24">
+          <div>
+            <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-energy">
+              Leadership experience
+            </p>
+            <p
+              class="mt-3 flex items-baseline gap-1 text-6xl font-semibold tracking-tight text-navy sm:text-7xl"
+              aria-label="More than 30 years of leadership experience"
+            >
+              <span class="tabular-nums">30</span>
+              <span class="text-energy">+</span>
+            </p>
+          </div>
+          <div class="max-w-2xl xl:max-w-3xl">
+            <h2 class="text-3xl font-semibold tracking-tight text-navy sm:text-4xl">
+              Years of leadership experience
+            </h2>
+            <p class="mt-4 text-base leading-relaxed text-mute sm:text-lg">
+              The figure describes the people behind the organisation, not the age of the firm.
+              Transform Energy is a current consultancy; the depth of the practice comes from
+              leadership experience across the power and energy sector.
+            </p>
+            <p class="mt-4 text-base leading-relaxed text-mute">
+              {company.experienceLead}
+            </p>
+          </div>
+        </div>
+      </AnimatedReveal>
+    </div>
+  </section>
+
+  <TrustBlock
+    tone="navy"
+    eyebrow="Areas of expertise"
+    title="The domains behind the practice."
+    kicker="Leadership experience covers power infrastructure, renewables, regulation, markets, project management, inspection, safety, and documentation."
+  />
+
+  <section class="bg-white">
+    <div class="mx-auto grid shell gap-12 px-6 py-16 sm:px-8 lg:grid-cols-2 lg:py-20">
+      <AnimatedReveal>
+        <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-energy">Vision</p>
+        <p class="mt-3 text-2xl font-semibold leading-snug text-navy sm:text-3xl">{company.vision}</p>
+      </AnimatedReveal>
+      <AnimatedReveal>
+        <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-energy">Mission</p>
+        <p class="mt-3 text-base leading-relaxed text-mute sm:text-lg">{company.mission}</p>
+      </AnimatedReveal>
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-canvas">
+    <div class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+      <AnimatedReveal>
+        <SectionHeading
+          eyebrow="Professional approach"
+          title="How the practice works."
+          kicker="The organisation is built as a consultancy. Advice is intended to meet standards, support operational excellence, and sit beside regulatory consultation."
+        />
+      </AnimatedReveal>
+      <ul class="mt-10 grid gap-px border border-line bg-line sm:grid-cols-2">
+        {
+          professionalApproach.map((item, index) => (
+            <li class="bg-white p-6 sm:p-8">
+              <AnimatedReveal>
+                <p class="font-mono text-[0.65rem] tracking-[0.18em] text-mute">
+                  {String(index + 1).padStart(2, '0')}
+                </p>
+                <h3 class="mt-3 text-lg font-semibold text-navy">{item.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-mute">{item.body}</p>
+              </AnimatedReveal>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="relative overflow-hidden bg-navy text-white">
+    <div class="technical-grid pointer-events-none absolute inset-0 opacity-20" aria-hidden="true"></div>
+    <div class="relative mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+      <AnimatedReveal>
+        <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-spark">
+          Why clients can engage Transform Energy
+        </p>
+        <h2 class="mt-3 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
+          Depth across the assignment, not a single specialism.
+        </h2>
+      </AnimatedReveal>
+      <ul class="mt-12 grid gap-px bg-white/10 sm:grid-cols-2">
+        {
+          whyPillars.map((pillar, index) => (
+            <li class="bg-navy p-6 sm:p-8">
+              <AnimatedReveal>
+                <p class="font-mono text-[0.65rem] tracking-[0.18em] text-spark">
+                  {String(index + 1).padStart(2, '0')}
+                </p>
+                <h3 class="mt-4 text-xl font-semibold">{pillar.title}</h3>
+                <p class="mt-3 max-w-md text-sm leading-relaxed text-white/70 sm:text-base">
+                  {pillar.body}
+                </p>
+              </AnimatedReveal>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Photo
+    src={photos.transmission}
+    alt="Power transmission infrastructure"
+    class="border-y border-line"
+    imgClass="h-56 w-full object-cover sm:h-72"
+    sizes="100vw"
+  />
+
+  <LeadershipProfiles />
+</PageLayout>

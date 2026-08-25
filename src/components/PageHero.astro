@@ -1,0 +1,116 @@
+﻿---
+import type { ImageMetadata } from 'astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Photo from '@/components/Photo.astro';
+import EnergyLines from '@/components/EnergyLines.astro';
+import ServiceDiagram from '@/components/ServiceDiagram.astro';
+import type { ServiceDiagram as DiagramVariant } from '@/data/services';
+
+type Crumb = { href?: string; label: string };
+
+type Props = {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  crumbs?: Crumb[];
+  tone?: 'light' | 'navy';
+  photo?: ImageMetadata;
+  photoAlt?: string;
+  diagram?: DiagramVariant;
+};
+
+const { eyebrow, title, description, crumbs, tone = 'light', photo, photoAlt, diagram } = Astro.props;
+const isNavy = tone === 'navy';
+---
+
+<section class:list={['relative overflow-hidden', isNavy ? 'bg-navy text-white' : 'bg-canvas']}>
+  {
+    photo && (
+      <Photo
+        src={photo}
+        alt={photoAlt ?? ''}
+        priority
+        class="absolute inset-0 h-full w-full overflow-hidden"
+        imgClass={`h-full w-full object-cover ${isNavy ? 'object-[center_40%] opacity-50' : 'opacity-30'}`}
+        sizes="100vw"
+      />
+    )
+  }
+  {
+    isNavy && photo && (
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-navy-dark via-navy-dark/88 to-navy/40"
+        aria-hidden="true"
+      />
+    )
+  }
+  <div
+    class:list={[
+      'technical-grid pointer-events-none absolute inset-0',
+      isNavy ? 'opacity-25 mix-blend-soft-light' : 'opacity-70',
+    ]}
+    aria-hidden="true"
+  >
+  </div>
+  {isNavy && <EnergyLines tone="dark" />}
+
+  <div
+    class:list={[
+      'relative mx-auto shell px-6 py-16 sm:px-8 sm:py-20 lg:py-24',
+      diagram && 'grid items-end gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]',
+    ]}
+  >
+    <div>
+      {
+        crumbs && (
+          <div class:list={['mb-8', isNavy && '[&_span]:text-white/85 [&_a]:text-white/70 [&_a:hover]:text-white']}>
+            <Breadcrumb items={crumbs} />
+          </div>
+        )
+      }
+      {
+        eyebrow && (
+          <p
+            class:list={[
+              'mb-4 text-[0.7rem] font-semibold uppercase tracking-[0.22em]',
+              isNavy ? 'text-spark' : 'text-energy',
+            ]}
+          >
+            {eyebrow}
+          </p>
+        )
+      }
+      <h1 class="max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-[3.35rem] lg:leading-[1.12]">
+        {title}
+      </h1>
+      {
+        description && (
+          <p
+            class:list={[
+              'mt-6 max-w-2xl text-base leading-relaxed sm:text-lg',
+              isNavy ? 'text-white/75' : 'text-mute',
+            ]}
+          >
+            {description}
+          </p>
+        )
+      }
+      <slot />
+    </div>
+    {
+      diagram && (
+        <div class:list={[isNavy ? 'mt-8 border border-white/10 bg-navy-dark/40 lg:mt-0' : 'mt-8 border border-line bg-white lg:mt-0']}>
+          <ServiceDiagram
+            variant={diagram}
+            tone={isNavy ? 'dark' : 'light'}
+            idPrefix={`${diagram}-hero`}
+            class="h-44 w-full p-3 lg:h-56 lg:p-4"
+          />
+        </div>
+      )
+    }
+  </div>
+  <div class="pointer-events-none absolute inset-x-0 bottom-0 h-px overflow-hidden" aria-hidden="true">
+    <div class="energy-line-motion h-px w-[120%] bg-gradient-to-r from-transparent via-energy/70 to-spark/80"></div>
+  </div>
+</section>

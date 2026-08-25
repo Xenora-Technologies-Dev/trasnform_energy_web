@@ -1,0 +1,61 @@
+﻿---
+import PageLayout from '@/layouts/PageLayout.astro';
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import Photo from '@/components/Photo.astro';
+import { services, servicesIntro } from '@/data/services';
+import { photos } from '@/data/photos';
+
+const description =
+  'Electrical engineering, energy regulatory affairs, project supervision and PMC, renewable energy consultancy, power-market scheduling advisory, technical documentation, and electrical safety audit.';
+---
+
+<PageLayout
+  title="Energy Consultancy Services"
+  description={description}
+  path="/services"
+  ogTitle="Energy Consultancy Services"
+  ogDescription={description}
+  eyebrow={servicesIntro.eyebrow}
+  heading={servicesIntro.heading}
+  lede={servicesIntro.lede}
+  crumbs={[{ href: '/', label: 'Home' }, { label: 'Services' }]}
+  ctaTitle="Need a specific capability?"
+  ctaBody="Write with a short note on the engineering, regulatory, project, or documentation requirement."
+>
+  <section class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+    <AnimatedReveal>
+      <SectionHeading
+        eyebrow="The practice"
+        title="Seven services, one consultancy stack."
+        kicker={servicesIntro.body}
+      />
+    </AnimatedReveal>
+  </section>
+
+  <Photo
+    src={photos.wind}
+    alt="Wind generation"
+    class="border-y border-line"
+    imgClass="h-52 w-full object-cover sm:h-64 lg:h-72"
+    sizes="100vw"
+  />
+
+  <section class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
+    <div class="border-b border-line">
+      {
+        services.map((service, index) => (
+          <AnimatedReveal>
+            <ServiceCard
+              href={service.href}
+              index={String(index + 1).padStart(2, '0')}
+              title={service.title}
+              summary={service.summary}
+            />
+          </AnimatedReveal>
+        ))
+      }
+    </div>
+  </section>
+</PageLayout>
