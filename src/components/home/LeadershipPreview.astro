@@ -1,0 +1,57 @@
+---
+import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import Photo from '@/components/Photo.astro';
+import { leadershipProfiles } from '@/data/company';
+import { peoplePhotos } from '@/data/photos';
+---
+
+{
+  leadershipProfiles.length > 0 && (
+    <section id="people" class="scroll-mt-28 border-b border-line bg-white">
+      <div class="mx-auto shell px-6 py-16 sm:px-8 lg:py-24 xl:px-12">
+        <AnimatedReveal>
+          <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <SectionHeading
+              eyebrow="The people behind the consultancy"
+              title="The careers behind the practice."
+              kicker="Former KSEBL leadership, the state’s chief electrical inspector, and renewable-power executives — now advising on engineering, regulation, and energy assignments."
+            />
+            <p class="lg:mb-1 lg:shrink-0">
+              <a href="/about#people" class="text-sm font-semibold text-navy hover:underline">
+                Read full profiles
+              </a>
+            </p>
+          </div>
+        </AnimatedReveal>
+        <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {leadershipProfiles.map((person, index) => (
+            <li>
+              <AnimatedReveal>
+                <a
+                  href={`/about#${person.slug}`}
+                  class="group flex h-full flex-col border border-line bg-canvas/40 transition-colors duration-200 hover:border-navy/30 hover:bg-white"
+                >
+                  <Photo
+                    src={peoplePhotos[person.slug]}
+                    alt={`Portrait of ${person.name}`}
+                    class="overflow-hidden bg-canvas"
+                    imgClass="aspect-[4/5] w-full object-cover object-[center_18%] transition-transform duration-500 group-hover:scale-[1.03]"
+                    sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 100vw"
+                  />
+                  <div class="flex flex-1 flex-col p-5 sm:p-6">
+                    <p class="font-mono text-[0.65rem] tracking-[0.18em] text-mute">
+                      {String(index + 1).padStart(2, '0')}
+                    </p>
+                    <h3 class="mt-2 text-lg font-semibold text-navy">{person.name}</h3>
+                    <p class="mt-1 text-sm leading-relaxed text-energy">{person.shortRole}</p>
+                  </div>
+                </a>
+              </AnimatedReveal>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

@@ -63,9 +63,10 @@ const year = new Date().getFullYear();
     </div>
   </div>
   <div class="border-t border-white/10">
-    <div class="mx-auto flex shell flex-col gap-1 px-6 py-5 text-xs text-white/50 sm:px-8 sm:flex-row sm:items-center sm:justify-between">
+    <div class="mx-auto grid shell gap-2 px-6 py-5 text-xs text-white/50 sm:grid-cols-3 sm:items-center sm:px-8">
       <p>© {year} {company.legalName}</p>
-      <p>{office.locality}, {office.region}</p>
+      <p class="sm:text-center">Designed and developed by Belvix Technologies</p>
+      <p class="sm:text-right">{office.locality}, {office.region}</p>
     </div>
   </div>
 </footer>

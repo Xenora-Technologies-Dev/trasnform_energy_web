@@ -45,12 +45,53 @@ export const professionalApproach = [
 ] as const;
 
 export type LeadershipProfile = {
+  slug: 'kumaran-p' | 'anand-sr' | 'anilkumar-vc' | 'augustine-thomas';
   name: string;
   role: string;
-  summary: string;
+  shortRole: string;
+  expertise: string;
+  trackRecord: string;
 };
 
-export const leadershipProfiles: LeadershipProfile[] = [];
+export const leadershipProfiles: LeadershipProfile[] = [
+  {
+    slug: 'kumaran-p',
+    name: 'Mr. Kumaran P',
+    role: 'Former Director, KSEBL',
+    shortRole: 'Former Director, KSEBL',
+    expertise: 'Distribution & Transmission construction activities',
+    trackRecord:
+      'Led large-scale infrastructure projects ensuring reliability and efficiency in Kerala’s power grid.',
+  },
+  {
+    slug: 'anand-sr',
+    name: 'Dr. Anand S.R.',
+    role: 'Former Director, KSEBL & Renewable Power Corporation Kerala Ltd, Chief of State Load Dispatch Centre',
+    shortRole: 'Former Director, KSEBL & RPCKL',
+    expertise:
+      'Power system operation, protection, communication, transmission planning, regulatory matters',
+    trackRecord:
+      'Spearheaded advanced optimization in power system operation, regulatory matters, protection and communication systems, enhancing grid stability and renewable integration.',
+  },
+  {
+    slug: 'anilkumar-vc',
+    name: 'Mr. Anilkumar V.C.',
+    role: 'Former Chief Electrical Inspector, Govt. of Kerala',
+    shortRole: 'Former Chief Electrical Inspector, Kerala',
+    expertise: 'Policy formulation, safety audit, inspection & approval processes',
+    trackRecord:
+      'Oversaw regulatory compliance and safety standards across diverse industrial and commercial establishments.',
+  },
+  {
+    slug: 'augustine-thomas',
+    name: 'Mr. Augustine Thomas',
+    role: 'Former Chief Engineer, KSEBL & Former CEO, Renewable Power Corporation Kerala Ltd',
+    shortRole: 'Former Chief Engineer, KSEBL',
+    expertise: 'Power system management, solar park development, solar system integration',
+    trackRecord:
+      'Pioneered solar park projects and renewable integration strategies, contributing to Kerala’s clean energy transition.',
+  },
+];
 
 export const office = {
   name: 'Dotspace Business Centre',

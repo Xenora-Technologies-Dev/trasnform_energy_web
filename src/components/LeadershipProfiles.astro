@@ -1,26 +1,65 @@
 ﻿---
 import SectionHeading from '@/components/SectionHeading.astro';
 import AnimatedReveal from '@/components/AnimatedReveal.astro';
+import Photo from '@/components/Photo.astro';
 import { leadershipProfiles } from '@/data/company';
+import { peoplePhotos } from '@/data/photos';
 ---
 
 {
   leadershipProfiles.length > 0 && (
-    <section class="border-t border-line bg-white">
+    <section id="people" class="scroll-mt-28 bg-canvas">
       <div class="mx-auto shell px-6 py-16 sm:px-8 lg:py-20">
         <AnimatedReveal>
           <SectionHeading
-            eyebrow="Our Leadership"
-            title="The people behind the practice."
-            kicker="Profiles are published only when names and roles have been supplied."
+            eyebrow="The people behind the consultancy"
+            title="Leadership from Kerala’s power sector."
+            kicker="Former directors, chief engineers, and the state’s chief electrical inspector — the careers behind Transform Energy’s engineering, regulatory, and renewable-energy practice."
           />
         </AnimatedReveal>
-        <ul class="mt-10 grid gap-6 md:grid-cols-2">
-          {leadershipProfiles.map((person) => (
-            <li class="border border-line p-6 sm:p-8">
-              <h3 class="text-xl font-semibold text-navy">{person.name}</h3>
-              <p class="mt-1 text-sm font-medium text-energy">{person.role}</p>
-              <p class="mt-4 text-sm leading-relaxed text-mute">{person.summary}</p>
+        <ul class="mt-12 grid gap-6 lg:gap-8">
+          {leadershipProfiles.map((person, index) => (
+            <li id={person.slug} class="scroll-mt-28">
+              <AnimatedReveal>
+                <article class="grid overflow-hidden border border-line bg-white md:grid-cols-[minmax(14rem,18rem)_minmax(0,1fr)] xl:grid-cols-[minmax(16rem,20rem)_minmax(0,1fr)]">
+                  <Photo
+                    src={peoplePhotos[person.slug]}
+                    alt={`Portrait of ${person.name}`}
+                    class="h-full bg-canvas"
+                    imgClass="aspect-[4/5] h-full w-full object-cover object-[center_18%] md:aspect-auto md:min-h-[22rem]"
+                    sizes="(min-width: 1280px) 320px, (min-width: 768px) 288px, 100vw"
+                  />
+                  <div class="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+                    <p class="font-mono text-[0.65rem] tracking-[0.18em] text-mute">
+                      {String(index + 1).padStart(2, '0')}
+                    </p>
+                    <h3 class="mt-3 text-2xl font-semibold tracking-tight text-navy sm:text-[1.7rem]">
+                      {person.name}
+                    </h3>
+                    <p class="mt-2 max-w-2xl text-sm font-medium leading-relaxed text-energy sm:text-base">
+                      {person.role}
+                    </p>
+                    <dl class="mt-6 space-y-4 border-t border-line pt-6">
+                      <div>
+                        <dt class="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-mute">
+                          Expertise
+                        </dt>
+                        <dd class="mt-1.5 text-sm leading-relaxed text-ink sm:text-[0.95rem]">
+                          {person.expertise}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt class="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-mute">
+                          Track record
+                        </dt>
+                        <dd class="mt-1.5 max-w-2xl text-sm leading-relaxed text-mute sm:text-[0.95rem]">
+                          {person.trackRecord}
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                </article>
+              </AnimatedReveal>
             </li>
           ))}
         </ul>

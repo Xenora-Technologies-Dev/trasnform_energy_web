@@ -1,5 +1,5 @@
 ---
-import { company, contact, office } from '@/data/company';
+import { company, contact, leadershipProfiles, office } from '@/data/company';
 import { services } from '@/data/services';
 import { absoluteUrl } from '@/data/seo';
 
@@ -29,6 +29,19 @@ const origin = Astro.site;
       postalCode: office.postalCode,
       addressCountry: office.country,
     },
+    member: leadershipProfiles.map((person) => ({
+      '@type': 'Person',
+      name: person.name,
+      jobTitle: person.role,
+      description: `${person.expertise}. ${person.trackRecord}`,
+      image: origin
+        ? absoluteUrl(`/people/${person.slug}.jpeg`, origin)
+        : `/people/${person.slug}.jpeg`,
+      worksFor: {
+        '@type': 'ProfessionalService',
+        name: company.publicName,
+      },
+    })),
     knowsAbout: [
       'Electrical engineering consultancy',
       'Regulatory affairs',
