@@ -24,10 +24,10 @@ import { peoplePhotos } from '@/data/photos';
             </p>
           </div>
         </AnimatedReveal>
-        <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <ul class="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {leadershipProfiles.map((person, index) => (
-            <li>
-              <AnimatedReveal>
+            <li class="h-full min-w-0">
+              <AnimatedReveal class="h-full">
                 <a
                   href={`/about#${person.slug}`}
                   class="group flex h-full flex-col border border-line bg-canvas/40 transition-colors duration-200 hover:border-navy/30 hover:bg-white"
@@ -35,8 +35,8 @@ import { peoplePhotos } from '@/data/photos';
                   <Photo
                     src={peoplePhotos[person.slug]}
                     alt={`Portrait of ${person.name}`}
-                    class="overflow-hidden bg-canvas"
-                    imgClass="aspect-[4/5] w-full object-cover object-[center_18%] transition-transform duration-500 group-hover:scale-[1.03]"
+                    class="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-canvas"
+                    imgClass="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
                     sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 100vw"
                   />
                   <div class="flex flex-1 flex-col p-5 sm:p-6">
@@ -44,7 +44,7 @@ import { peoplePhotos } from '@/data/photos';
                       {String(index + 1).padStart(2, '0')}
                     </p>
                     <h3 class="mt-2 text-lg font-semibold text-navy">{person.name}</h3>
-                    <p class="mt-1 text-sm leading-relaxed text-energy">{person.shortRole}</p>
+                    <p class="mt-1 min-h-[2.75rem] text-sm leading-relaxed text-energy">{person.shortRole}</p>
                   </div>
                 </a>
               </AnimatedReveal>

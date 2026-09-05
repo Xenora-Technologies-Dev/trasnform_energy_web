@@ -2,35 +2,32 @@
 import AnimatedReveal from '@/components/AnimatedReveal.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import Photo from '@/components/Photo.astro';
+import { company } from '@/data/company';
 import { photos } from '@/data/photos';
 ---
 
 <section id="about" class="scroll-mt-28 bg-canvas">
-  <div class="mx-auto grid shell items-center gap-12 px-6 py-16 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:py-24 xl:gap-20 xl:px-12">
+  <div class="mx-auto grid shell items-start gap-12 px-6 py-16 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:py-24 xl:gap-20 xl:px-12">
     <AnimatedReveal>
       <SectionHeading
         eyebrow="About Transform Energy"
-        title="Experience that understands the power sector."
+        title="Who we are"
       />
       <div class="mt-6 max-w-xl space-y-4 text-base leading-relaxed text-mute sm:text-lg xl:max-w-2xl">
-        <p>
-          Transform Energy Consultancy was formed by seasoned engineering professionals. We provide
-          technically robust, compliant, and practical consultancy support for power and energy work.
-        </p>
-        <p>
-          The practice covers electrical engineering, regulatory affairs, project supervision,
-          renewable energy, power-market advisory, technical documentation, and safety audit — as a
-          consultancy, not as a construction, contracting, or installation company.
-        </p>
+        {company.whoWeAre.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
       </div>
-      <p class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
-        <a href="/about" class="text-sm font-semibold text-navy hover:underline">
-          Read more about the practice
-        </a>
-        <a href="/about#people" class="text-sm font-semibold text-navy hover:underline">
-          Meet the people behind Transform Energy
-        </a>
-      </p>
+      <div class="mt-10 grid gap-8 sm:grid-cols-2">
+        <div>
+          <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-energy">Vision</p>
+          <p class="mt-3 text-base font-semibold leading-snug text-navy sm:text-lg">{company.vision}</p>
+        </div>
+        <div>
+          <p class="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-energy">Mission</p>
+          <p class="mt-3 text-sm leading-relaxed text-mute sm:text-base">{company.mission}</p>
+        </div>
+      </div>
     </AnimatedReveal>
     <AnimatedReveal>
       <Photo

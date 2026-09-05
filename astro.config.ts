@@ -11,12 +11,19 @@ export default defineConfig({
   trailingSlash: 'never',
   output: 'static',
   adapter: netlify({ imageCDN: false }),
+  redirects: {
+    '/projects': '/',
+    '/insights': '/',
+    '/insights/[...slug]': '/',
+  },
   integrations: [
     sitemap({
       filter: (page) => {
         const path = new URL(page).pathname;
         if (path.startsWith('/og/')) return false;
         if (path.startsWith('/api/')) return false;
+        if (path.startsWith('/projects')) return false;
+        if (path.startsWith('/insights')) return false;
         return true;
       },
     }),

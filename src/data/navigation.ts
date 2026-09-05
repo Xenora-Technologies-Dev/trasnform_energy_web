@@ -19,8 +19,6 @@ export const primaryNav: NavLink[] = [
     })),
   },
   { href: '/industries', label: 'Industries' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/insights', label: 'Insights' },
 ];
 
 export const footerNav = [
@@ -28,7 +26,5 @@ export const footerNav = [
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
   { href: '/industries', label: 'Industries' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/insights', label: 'Insights' },
   { href: '/contact', label: 'Contact' },
 ] as const;

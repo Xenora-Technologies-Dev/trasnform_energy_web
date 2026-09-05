@@ -5,12 +5,16 @@ export const company = {
   shortName: 'TECS',
   positioning:
     'Electrical engineering consultancy for power infrastructure, renewable energy, and regulated markets.',
+  whoWeAre: [
+    'We are a professionally established Electrical Engineering consultancy organization formed by a team of seasoned engineering professionals.',
+    'With over three decades of leadership experience across power infrastructure, renewable energy development, regulatory affairs, power market operation, scheduling and dispatch, management of major projects with CFA, installation inspection & energization approval and safety audits, our team delivers end-to-end consultancy services that combine technical expertise, regulatory compliance, administrative acumen, and documentation excellence.',
+  ],
   experienceLead:
     'Over three decades of leadership experience across power infrastructure, renewable energy development, regulatory affairs, power market operation, scheduling and dispatch, management of major projects with CFA, installation inspection and energization approval, safety audits, and technical documentation.',
   vision:
     'To be the most trusted consultancy partner for sustainable, compliant, and technically robust energy solutions.',
   mission:
-    'To leverage the unparalleled expertise of our leadership team to empower clients with solutions that meet standards, achieve operational excellence, accelerate renewable energy adoption and regulatory consultation.',
+    'To leverage the unparalleled expertise of our leadership team to empower clients with solutions that meet standards, achieve operational excellence, accelerate renewable energy adoption and regulatory consultation',
 } as const;
 
 export const leadershipDomains = [
