@@ -11,11 +11,6 @@ export default defineConfig({
   trailingSlash: 'never',
   output: 'static',
   adapter: netlify({ imageCDN: false }),
-  redirects: {
-    '/projects': '/',
-    '/insights': '/',
-    '/insights/[...slug]': '/',
-  },
   integrations: [
     sitemap({
       filter: (page) => {
