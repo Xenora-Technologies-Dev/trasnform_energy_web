@@ -20,6 +20,7 @@ const origin = Astro.site;
     url: origin ? new URL('/', origin).toString() : undefined,
     image: origin ? absoluteUrl('/brand/tecs-logo.jpg', origin) : undefined,
     email: contact.email,
+    telephone: '+919895098000',
     slogan: company.vision,
     address: {
       '@type': 'PostalAddress',
@@ -33,6 +34,7 @@ const origin = Astro.site;
       '@type': 'Person',
       name: person.name,
       jobTitle: person.role,
+      telephone: person.phones.map((phone) => phone.href.replace('tel:', '')),
       description: `${person.expertise}. ${person.trackRecord}`,
       image: origin
         ? absoluteUrl(`/people/${person.slug}.jpeg`, origin)

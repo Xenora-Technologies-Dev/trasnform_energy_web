@@ -2,6 +2,7 @@
 import SectionHeading from '@/components/SectionHeading.astro';
 import AnimatedReveal from '@/components/AnimatedReveal.astro';
 import Photo from '@/components/Photo.astro';
+import CallCta from '@/components/CallCta.astro';
 import { leadershipProfiles } from '@/data/company';
 import { peoplePhotos } from '@/data/photos';
 ---
@@ -57,6 +58,7 @@ import { peoplePhotos } from '@/data/photos';
                         </dd>
                       </div>
                     </dl>
+                    <CallCta phones={person.phones} />
                   </div>
                 </article>
               </AnimatedReveal>

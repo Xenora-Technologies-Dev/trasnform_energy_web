@@ -48,6 +48,11 @@ export const professionalApproach = [
   },
 ] as const;
 
+export type PhoneNumber = {
+  display: string;
+  href: string;
+};
+
 export type LeadershipProfile = {
   slug: 'kumaran-p' | 'anand-sr' | 'anilkumar-vc' | 'augustine-thomas';
   name: string;
@@ -55,6 +60,7 @@ export type LeadershipProfile = {
   shortRole: string;
   expertise: string;
   trackRecord: string;
+  phones: PhoneNumber[];
 };
 
 export const leadershipProfiles: LeadershipProfile[] = [
@@ -66,6 +72,10 @@ export const leadershipProfiles: LeadershipProfile[] = [
     expertise: 'Distribution & Transmission construction activities',
     trackRecord:
       'Led large-scale infrastructure projects ensuring reliability and efficiency in Kerala’s power grid.',
+    phones: [
+      { display: '+91 98950 98000', href: 'tel:+919895098000' },
+      { display: '+91 94476 24777', href: 'tel:+919447624777' },
+    ],
   },
   {
     slug: 'anand-sr',
@@ -76,6 +86,7 @@ export const leadershipProfiles: LeadershipProfile[] = [
       'Power system operation, protection, communication, transmission planning, regulatory matters',
     trackRecord:
       'Spearheaded advanced optimization in power system operation, regulatory matters, protection and communication systems, enhancing grid stability and renewable integration.',
+    phones: [{ display: '+91 94473 78302', href: 'tel:+919447378302' }],
   },
   {
     slug: 'anilkumar-vc',
@@ -85,6 +96,7 @@ export const leadershipProfiles: LeadershipProfile[] = [
     expertise: 'Policy formulation, safety audit, inspection & approval processes',
     trackRecord:
       'Oversaw regulatory compliance and safety standards across diverse industrial and commercial establishments.',
+    phones: [{ display: '+91 94476 50660', href: 'tel:+919447650660' }],
   },
   {
     slug: 'augustine-thomas',
@@ -94,6 +106,7 @@ export const leadershipProfiles: LeadershipProfile[] = [
     expertise: 'Power system management, solar park development, solar system integration',
     trackRecord:
       'Pioneered solar park projects and renewable integration strategies, contributing to Kerala’s clean energy transition.',
+    phones: [{ display: '+91 94472 36817', href: 'tel:+919447236817' }],
   },
 ];
 
@@ -103,18 +116,22 @@ export const office = {
     'Dotspace Business Centre, DD 18',
     '37/2200/8, 2nd Floor, MC Tower',
     'Punkunnam, Thrissur',
-    'Kerala 6820002',
+    'Kerala 680002',
   ],
   locality: 'Punkunnam, Thrissur',
   region: 'Kerala',
-  postalCode: '6820002',
+  postalCode: '680002',
   country: 'IN',
   mapsQuery:
-    'Dotspace Business Centre, DD 18, 37/2200/8, 2nd Floor, MC Tower, Punkunnam, Thrissur, Kerala 6820002',
+    'Dotspace Business Centre, DD 18, 37/2200/8, 2nd Floor, MC Tower, Punkunnam, Thrissur, Kerala 680002',
 } as const;
 
 export const contact = {
   email: 'tecskaaa@gmail.com',
+  whatsapp: {
+    display: '+91 98950 98000',
+    href: 'https://wa.me/919895098000',
+  },
   get mapsUrl() {
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.mapsQuery)}`;
   },

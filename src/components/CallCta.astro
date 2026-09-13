@@ -1,0 +1,30 @@
+---
+import Phone from '@lucide/astro/icons/phone';
+import type { PhoneNumber } from '@/data/company';
+
+type Props = {
+  phones: readonly PhoneNumber[];
+  compact?: boolean;
+};
+
+const { phones, compact = false } = Astro.props;
+---
+
+{
+  phones.length > 0 && (
+    <div class:list={['flex flex-col gap-2', compact ? 'items-stretch' : 'mt-6 items-start']}>
+      {phones.map((phone) => (
+        <a
+          href={phone.href}
+          class:list={[
+            'inline-flex items-center justify-center gap-2 rounded-sm border border-navy font-semibold text-navy transition-colors duration-200 hover:bg-navy hover:text-white',
+            compact ? 'w-full px-3 py-2 text-xs' : 'px-4 py-2.5 text-sm',
+          ]}
+        >
+          <Phone class={compact ? 'h-3.5 w-3.5' : 'h-4 w-4'} aria-hidden="true" />
+          <span>Call {phone.display}</span>
+        </a>
+      ))}
+    </div>
+  )
+}

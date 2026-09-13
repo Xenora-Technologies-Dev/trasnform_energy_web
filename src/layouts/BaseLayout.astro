@@ -4,6 +4,7 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import Seo from '@/components/Seo.astro';
 import JsonLd from '@/components/JsonLd.astro';
+import WhatsAppCta from '@/components/WhatsAppCta.astro';
 import type { SeoInput } from '@/data/seo';
 
 type Props = SeoInput & {
@@ -36,6 +37,7 @@ const { jsonLd = true, ...seo } = Astro.props;
       <slot />
     </main>
     <Footer />
+    <WhatsAppCta />
     <script>
       import { initReveal } from '@/scripts/reveal';
       initReveal();

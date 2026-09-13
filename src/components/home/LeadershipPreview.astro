@@ -2,6 +2,7 @@
 import AnimatedReveal from '@/components/AnimatedReveal.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import Photo from '@/components/Photo.astro';
+import CallCta from '@/components/CallCta.astro';
 import { leadershipProfiles } from '@/data/company';
 import { peoplePhotos } from '@/data/photos';
 ---
@@ -28,25 +29,27 @@ import { peoplePhotos } from '@/data/photos';
           {leadershipProfiles.map((person, index) => (
             <li class="h-full min-w-0">
               <AnimatedReveal class="h-full">
-                <a
-                  href={`/about#${person.slug}`}
-                  class="group flex h-full flex-col border border-line bg-canvas/40 transition-colors duration-200 hover:border-navy/30 hover:bg-white"
-                >
-                  <Photo
-                    src={peoplePhotos[person.slug]}
-                    alt={`Portrait of ${person.name}`}
-                    class="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-canvas"
-                    imgClass="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-                    sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 100vw"
-                  />
-                  <div class="flex flex-1 flex-col p-5 sm:p-6">
-                    <p class="font-mono text-[0.65rem] tracking-[0.18em] text-mute">
-                      {String(index + 1).padStart(2, '0')}
-                    </p>
-                    <h3 class="mt-2 text-lg font-semibold text-navy">{person.name}</h3>
-                    <p class="mt-1 min-h-[2.75rem] text-sm leading-relaxed text-energy">{person.shortRole}</p>
+                <article class="flex h-full flex-col border border-line bg-canvas/40 transition-colors duration-200 hover:border-navy/30 hover:bg-white">
+                  <a href={`/about#${person.slug}`} class="group flex min-h-0 flex-1 flex-col">
+                    <Photo
+                      src={peoplePhotos[person.slug]}
+                      alt={`Portrait of ${person.name}`}
+                      class="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-canvas"
+                      imgClass="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                      sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 100vw"
+                    />
+                    <div class="flex flex-1 flex-col px-5 pt-5 sm:px-6 sm:pt-6">
+                      <p class="font-mono text-[0.65rem] tracking-[0.18em] text-mute">
+                        {String(index + 1).padStart(2, '0')}
+                      </p>
+                      <h3 class="mt-2 text-lg font-semibold text-navy">{person.name}</h3>
+                      <p class="mt-1 min-h-[2.75rem] text-sm leading-relaxed text-energy">{person.shortRole}</p>
+                    </div>
+                  </a>
+                  <div class="px-5 pb-5 pt-2 sm:px-6 sm:pb-6">
+                    <CallCta phones={person.phones} compact />
                   </div>
-                </a>
+                </article>
               </AnimatedReveal>
             </li>
           ))}
