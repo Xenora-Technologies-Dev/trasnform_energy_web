@@ -1,7 +1,7 @@
 export const company = {
   legalName: 'TRANSFORM ENERGY CONSULTANCY SERVICES LLP',
-  name: 'Transform Energy Consultancy',
-  publicName: 'Transform Energy Consultancy',
+  name: 'Transform Energy Consultancy Services LLP',
+  publicName: 'Transform Energy Consultancy Services LLP',
   shortName: 'TECS',
   positioning:
     'Electrical engineering consultancy for power infrastructure, renewable energy, and regulated markets.',

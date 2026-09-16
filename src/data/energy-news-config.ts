@@ -116,7 +116,7 @@ export const insightCategories = [
     topic: false,
     seoTitle: 'Technical Energy Insights',
     seoDescription:
-      'Original technical notes from Transform Energy Consultancy on regulation, markets, documentation, and electrical practice.',
+      'Original technical notes from Transform Energy Consultancy Services LLP on regulation, markets, documentation, and electrical practice.',
     intro:
       'Longer original notes, written when the practice has something specific to add. They are not news summaries.',
   },

@@ -121,6 +121,10 @@
     height: 3.25rem;
   }
 
+  .site-header.is-compact .brand-wordmark > span {
+    font-size: 0.62rem;
+  }
+
   [data-services-trigger][aria-expanded='true'] .services-chevron,
   [data-mobile-services][aria-expanded='true'] .mobile-services-chevron {
     transform: rotate(180deg);
@@ -158,6 +162,10 @@
   @media (min-width: 768px) {
     .site-header.is-compact .brand-logo {
       height: 3.75rem;
+    }
+
+    .site-header.is-compact .brand-wordmark > span {
+      font-size: 0.7rem;
     }
   }
 

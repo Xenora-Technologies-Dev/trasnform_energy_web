@@ -4,7 +4,7 @@ export const industriesIntro = {
   eyebrow: 'Industries',
   heading: 'Where this expertise can apply.',
   lede: 'The categories below are potential application areas derived from the consultancy portfolio. They are not a list of claimed client sectors or established industry accounts.',
-  body: 'Transform Energy Consultancy has not published a sector-by-sector client list. The application areas follow from the actual services: electrical engineering, regulatory affairs, project supervision and PMC, renewable energy, power-market advisory, technical documentation, and safety audit.',
+  body: 'Transform Energy Consultancy Services LLP has not published a sector-by-sector client list. The application areas follow from the actual services: electrical engineering, regulatory affairs, project supervision and PMC, renewable energy, power-market advisory, technical documentation, and safety audit.',
 } as const;
 
 export const industrySectors = [

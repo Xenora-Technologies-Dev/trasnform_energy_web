@@ -27,6 +27,6 @@
   <path d="M0 430 C 260 340, 520 500, 820 410 S 1080 330, 1200 390" fill="none" stroke="#F5B51B" stroke-width="1.2" opacity="0.55"/>
   <text x="72" y="92" fill="#F5B51B" font-family="Manrope, ui-sans-serif, sans-serif" font-size="16" font-weight="700" letter-spacing="4">INSIGHTS</text>
   <text x="72" y="300" fill="#FFFFFF" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="600">Energy Intelligence</text>
-  <text x="72" y="560" fill="#FFFFFF" font-family="Manrope, ui-sans-serif, sans-serif" font-size="18" font-weight="600" opacity="0.8">Transform Energy Consultancy</text>
+  <text x="72" y="560" fill="#FFFFFF" font-family="Manrope, ui-sans-serif, sans-serif" font-size="18" font-weight="600" opacity="0.8">Transform Energy Consultancy Services LLP</text>
   <text x="72" y="588" fill="#FFFFFF" font-family="Manrope, ui-sans-serif, sans-serif" font-size="14" opacity="0.55">Power · Energy · Regulation</text>
 </svg>

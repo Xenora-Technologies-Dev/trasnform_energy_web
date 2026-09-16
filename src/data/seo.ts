@@ -4,13 +4,13 @@ export const defaultSeo = {
   title: `${company.publicName} | Electrical, Regulatory and Energy Consultancy`,
   titleTemplate: `%s | ${company.publicName}`,
   description:
-    'Transform Energy Consultancy is an electrical engineering consultancy with over three decades of leadership experience across power infrastructure, renewable energy, regulatory affairs, project support, and power market operation.',
+    'Transform Energy Consultancy Services LLP is an electrical engineering consultancy with over three decades of leadership experience across power infrastructure, renewable energy, regulatory affairs, project support, and power market operation.',
   ogType: 'website' as const,
   twitterCard: 'summary_large_image' as const,
   locale: 'en',
   image: {
     src: '/brand/tecs-logo.jpg',
-    alt: 'Transform Energy Consultancy Services (TECS) official logo',
+    alt: 'Transform Energy Consultancy Services LLP (TECS) official logo',
     width: 1200,
     height: 1200,
   },

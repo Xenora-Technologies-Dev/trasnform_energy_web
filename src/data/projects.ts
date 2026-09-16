@@ -1,7 +1,7 @@
 export const projectsIntro = {
   eyebrow: 'Projects',
   heading: 'Project Experience',
-  lede: 'Transform Energy Consultancy brings multidisciplinary engineering and power-sector expertise to project requirements.',
+  lede: 'Transform Energy Consultancy Services LLP brings multidisciplinary engineering and power-sector expertise to project requirements.',
   body: 'Named case studies, client identities, project values, capacities, locations, and results are not listed here. When verified case studies are supplied, they will appear in the framework below.',
 } as const;
 
