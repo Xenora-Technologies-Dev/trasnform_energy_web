@@ -1,5 +1,6 @@
 ﻿---
 import Logo from '@/components/Logo.astro';
+import Phone from '@lucide/astro/icons/phone';
 import WhatsAppIcon from '@/components/WhatsAppIcon.astro';
 import { company, contact, office } from '@/data/company';
 import { footerNav } from '@/data/navigation';
@@ -53,22 +54,36 @@ const year = new Date().getFullYear();
             {contact.email}
           </a>
         </li>
-        <li>
-          <a
-            href={contact.whatsapp.href}
-            class="inline-flex items-center gap-2 font-medium text-white hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span
-              class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#25D366] text-white"
-              aria-hidden="true"
-            >
-              <WhatsAppIcon class="h-3.5 w-3.5" />
-            </span>
-            WhatsApp {contact.whatsapp.display}
-          </a>
-        </li>
+        {
+          contact.phones.map((phone) => (
+            <li>
+              <a href={phone.href} class="inline-flex items-center gap-2 font-medium text-white hover:underline">
+                <Phone class="h-4 w-4 shrink-0 text-spark" aria-hidden="true" />
+                {phone.display}
+              </a>
+            </li>
+          ))
+        }
+        {
+          contact.whatsapp.map((entry) => (
+            <li>
+              <a
+                href={entry.href}
+                class="inline-flex items-center gap-2 font-medium text-white hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span
+                  class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#25D366] text-white"
+                  aria-hidden="true"
+                >
+                  <WhatsAppIcon class="h-3.5 w-3.5" />
+                </span>
+                WhatsApp {entry.display}
+              </a>
+            </li>
+          ))
+        }
         <li>
           <a href={contact.mapsUrl} class="hover:underline" rel="noopener noreferrer" target="_blank">
             {office.lines.map((line) => (

@@ -3,13 +3,38 @@ import { contact } from '@/data/company';
 import WhatsAppIcon from '@/components/WhatsAppIcon.astro';
 ---
 
-<a
-  href={contact.whatsapp.href}
-  class="whatsapp-cta fixed bottom-5 right-5 z-[60] inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_8px_24px_rgba(37,211,102,0.45)] transition-transform duration-200 hover:scale-105 hover:bg-[#20bd5a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-spark sm:bottom-6 sm:right-6"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label={`Chat on WhatsApp at ${contact.whatsapp.display}`}
-  title="Chat on WhatsApp"
->
-  <WhatsAppIcon class="h-7 w-7" />
-</a>
+<details class="whatsapp-cta fixed bottom-5 right-5 z-[60] sm:bottom-6 sm:right-6">
+  <summary
+    class="flex h-14 w-14 cursor-pointer list-none items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_8px_24px_rgba(37,211,102,0.45)] transition-transform duration-200 hover:scale-105 hover:bg-[#20bd5a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-spark [&::-webkit-details-marker]:hidden"
+    aria-label="Open WhatsApp numbers"
+    title="Chat on WhatsApp"
+  >
+    <WhatsAppIcon class="h-7 w-7" />
+  </summary>
+  <div class="absolute bottom-16 right-0 flex w-max flex-col gap-2 rounded-sm border border-line bg-white p-2 shadow-[0_12px_32px_rgba(7,27,53,0.16)]">
+    {
+      contact.whatsapp.map((entry) => (
+        <a
+          href={entry.href}
+          class="inline-flex items-center gap-2 px-2 py-1.5 text-sm font-semibold text-navy hover:bg-canvas"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span
+            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white"
+            aria-hidden="true"
+          >
+            <WhatsAppIcon class="h-4 w-4" />
+          </span>
+          {entry.display}
+        </a>
+      ))
+    }
+  </div>
+</details>
+
+<style>
+  .whatsapp-cta summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

@@ -128,10 +128,14 @@ export const office = {
 
 export const contact = {
   email: 'tecskaaa@gmail.com',
-  whatsapp: {
-    display: '+91 98950 98000',
-    href: 'https://wa.me/919895098000',
-  },
+  phones: [
+    { display: '+91 94476 50660', href: 'tel:+919447650660' },
+    { display: '+91 98950 98000', href: 'tel:+919895098000' },
+  ] satisfies PhoneNumber[],
+  whatsapp: [
+    { display: '+91 94476 50660', href: 'https://wa.me/919447650660' },
+    { display: '+91 98950 98000', href: 'https://wa.me/919895098000' },
+  ],
   get mapsUrl() {
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.mapsQuery)}`;
   },

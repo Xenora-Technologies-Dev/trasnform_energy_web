@@ -1,6 +1,7 @@
 ---
 import Mail from '@lucide/astro/icons/mail';
 import MapPin from '@lucide/astro/icons/map-pin';
+import Phone from '@lucide/astro/icons/phone';
 import WhatsAppIcon from '@/components/WhatsAppIcon.astro';
 import { company, contact, office } from '@/data/company';
 
@@ -42,27 +43,56 @@ const isDark = tone === 'dark';
   </div>
   <div>
     <p class:list={['text-[0.7rem] font-semibold uppercase tracking-[0.2em]', isDark ? 'text-spark' : 'text-energy']}>
+      Telephone
+    </p>
+    <ul class="mt-3 space-y-2">
+      {
+        contact.phones.map((phone) => (
+          <li>
+            <a
+              href={phone.href}
+              class:list={[
+                'inline-flex items-center gap-2 text-sm font-medium hover:underline',
+                isDark ? 'text-white' : 'text-navy',
+              ]}
+            >
+              <Phone class:list={['h-4 w-4 shrink-0', isDark ? 'text-spark' : 'text-navy']} aria-hidden="true" />
+              {phone.display}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <div>
+    <p class:list={['text-[0.7rem] font-semibold uppercase tracking-[0.2em]', isDark ? 'text-spark' : 'text-energy']}>
       WhatsApp
     </p>
-    <p class="mt-3">
-      <a
-        href={contact.whatsapp.href}
-        class:list={[
-          'inline-flex items-center gap-2 text-sm font-semibold hover:underline',
-          isDark ? 'text-white' : 'text-navy',
-        ]}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span
-          class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white"
-          aria-hidden="true"
-        >
-          <WhatsAppIcon class="h-4 w-4" />
-        </span>
-        Chat on WhatsApp {contact.whatsapp.display}
-      </a>
-    </p>
+    <ul class="mt-3 space-y-3">
+      {
+        contact.whatsapp.map((entry) => (
+          <li>
+            <a
+              href={entry.href}
+              class:list={[
+                'inline-flex items-center gap-2 text-sm font-semibold hover:underline',
+                isDark ? 'text-white' : 'text-navy',
+              ]}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span
+                class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white"
+                aria-hidden="true"
+              >
+                <WhatsAppIcon class="h-4 w-4" />
+              </span>
+              Chat on WhatsApp {entry.display}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </div>
   <p class:list={['text-xs', isDark ? 'text-white/45' : 'text-mute']}>{company.legalName}</p>
 </div>
